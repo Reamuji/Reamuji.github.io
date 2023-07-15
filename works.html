@@ -755,9 +755,9 @@
         const illustrationHeight = () => usedY/100*window.innerWidth;
         const sectionGap = () => musicSectOffset*window.innerHeight/100;
 
-        let illustRotDeg = 20;
-        let transisitionRotDeg = 70;
-        let musicRotDeg = 20;
+        let illustRotDeg = 0;
+        let transisitionRotDeg = 90;
+        let musicRotDeg = 0;
 
         window.addEventListener('scroll', ()=>{
             let currentIllustrationHeight = illustrationHeight()
