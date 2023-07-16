@@ -1,0 +1,118 @@
+body{
+    background-color: var(--bgColor);
+    color: white;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    /* overflow-x: hidden; */
+    width: 98vw;
+    height: 100%;
+}
+
+/* ============================================== MAIN MENU ============================================== */
+.buttonContainer{
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 60vw;
+    background-color:#fff;
+    color: #000;
+    border-radius: 100vh;
+    padding: 0px 5px;
+    position: fixed;
+    bottom: 5%;
+    backdrop-filter: brightness(0.4);
+    mix-blend-mode: lighten;
+}
+@media only screen and (max-width: 1200px) {
+    .buttonContainer{
+        width: 80%;
+    }
+}
+.buttonSplitter{
+    margin: 0 3vw;
+    display: flex;
+    border-radius: 50vh;
+    justify-content: space-between;
+}
+.buttonSplitter button {
+    font-family: "Noto Serif", serif;
+    font-weight: 600;    
+    /* color: #444; */
+    font-size: min(25px,3vw,5vh);
+    background-color:#0000;
+    height: min(11vh,11vw);
+    border-color: #0000;
+}
+.buttonSplitter button:hover{
+    color: #000;
+}
+.selectedButton{
+    color: #000 !important;
+    font-weight: 1000 !important;    
+}
+/* ======================= animated logo ======================= */
+.logoButton{
+    width: min(75px,8vw,15vh);
+    position: relative;
+    display: inline-block;
+}
+.KRNC {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.KRNC img {
+    max-width: min(100%,6vh);
+    max-height: 100%;
+    object-fit: cover;
+    position: absolute;
+    transition: transform 500ms ease-in-out;
+}
+.horizontal{
+    clip-path: polygon(0 0, 100% 0, 50% 50%, 100% 100%, 0 100%, 50% 50%);
+}
+.vertical{
+    clip-path: polygon(100% 0, 100% 100%, 50% 50%, 0 100%, 0 0, 50% 50%);
+}
+.logoIcon{
+    transform:rotate(-90deg);
+}
+.KRNCmid{
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-height: 100%;
+    
+    aspect-ratio: 1 / 1;
+}
+button img{
+    width: min(50px,6vw,10vh);
+    aspect-ratio: 1 / 1;
+}
+.logoButton{
+    order: 1;
+}
+.rightSideButton{
+    order: 2;
+}
+
+.desktop{ 
+    display: none;/* hide on mobile*/
+}
+@media (min-width: 768px) {
+    .mobile{
+        display: none;
+    }
+    .desktop{
+        display: initial;
+    }
+    .buttonSplitter button {
+        height: 11vh;
+    }
+    .logoButton{
+        order: -1;
+    }
+}

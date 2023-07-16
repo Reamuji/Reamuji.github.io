@@ -5,6 +5,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="asset\logo\karunochi\other\iconLow.webp" />
+    <link rel="stylesheet" href="shared.css">
     <script>
         const gambar_pas_diklik_aja = false;
         const waktu_ngilang = 4000;
@@ -17,6 +18,7 @@
             
             
             --bgColor:#000;
+            /* --bgColor: #151215; */
             --lineColor:#fff;
             
             --statScroll: 0px;
@@ -33,11 +35,6 @@
             width: 98vw;
             height: 100%;
         }
-
-        .desktop{
-            display: none;
-        }
-
         /* ============================================== imgViewer ============================================== */
         .imgViewer{
             position: fixed;
@@ -68,95 +65,7 @@
             display: none;
         }
 
-        /* ============================================== MAIN MENU ============================================== */
-        .buttonContainer{
-            left: 50%;
-            transform: translateX(-50%);
-            min-width: 60vw;
-            background-color:#fff;
-            color: #000;
-            border-radius: 100vh;
-            padding: 0px 5px;
-            position: fixed;
-            bottom: 5%;
-            /* mix-blend-mode: lighten; */
-        }
-        @media only screen and (max-width: 1200px) {
-            .buttonContainer{
-                width: 80%;
-            }
-        }
-        .buttonSplitter{
-            margin: 0 3vw;
-            display: flex;
-            border-radius: 50vh;
-            justify-content: space-between;
-        }
-        .buttonSplitter button {
-            font-family: "Noto Serif", serif;
-            font-weight: 900;    
-            color: #777;
-            font-size: min(25px,3vw,5vh);
-            background-color:#0000;
-            height: min(10vh,11vw);
-            border-color: #0000;
-        }
-        .buttonSplitter button:hover{
-            color: #000;
-        }
-        .selectedButton{
-            color: #000 !important;
-            font-weight: 1000 !important;    
-        }
-
-        /* ======================= animated logo ======================= */
-        .logoButton{
-            width: min(75px,8vw,15vh);
-            position: relative;
-            display: inline-block;
-        }
-        .KRNC {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-        }
-        .KRNC img {
-            max-width: min(100%,6vh);
-            max-height: 100%;
-            object-fit: cover;
-            position: absolute;
-            transition: transform 500ms ease-in-out;
-        }
-        .horizontal{
-            clip-path: polygon(0 0, 100% 0, 50% 50%, 100% 100%, 0 100%, 50% 50%);
-        }
-        .vertical{
-            clip-path: polygon(100% 0, 100% 100%, 50% 50%, 0 100%, 0 0, 50% 50%);
-        }
-        .logoIcon{
-            transform:rotate(-90deg);
-        }
-        .KRNCmid{
-            display: flex;
-            position: absolute;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            max-height: 100%;
-            
-            aspect-ratio: 1 / 1;
-        }
-        button img{
-            width: min(50px,6vw,10vh);
-            aspect-ratio: 1 / 1;
-        }
-        .logoButton{
-            order: 1;
-        }
-        .rightSideButton{
-            order: 2;
-        }
+        
         /* ============================================== GALERY ============================================== */
         /* img:hover{
             position: relative;
@@ -236,7 +145,14 @@
         }
 
         .music{
-            width: 100%;
+            position: absolute;
+            top: 100vh; 
+            right: 0; 
+            width: 100%; 
+            height: 250vh;
+        }
+        .music>img{
+            --imageWidth: 70%!important;
         }
         .music>img:hover{
             transform: scale(100%)!important;
@@ -246,6 +162,11 @@
             bottom: 0%;
         }
         /* banner */
+        .bannerBg{
+            /* background-color: #999; */
+            background-color: var(--bgColor);
+            /* background-color: #000; */
+        }
         .bannerContainer{
             overflow: hidden;
             position: absolute;
@@ -254,12 +175,8 @@
             width: 100%;
             white-space: nowrap;
         }
-        .banner{
-            background-color: #000;
-            /* background-color: #151215; */
-        }
         .musicStart{
-            font-size: 2em;
+            font-size: 2.5em;
         }
         /* ============================================== SCROLLBAR ============================================== */
         ::-webkit-scrollbar {
@@ -278,25 +195,7 @@
         }
         
         /* ============================================== DESKTOP ============================================== */
-        .desktop{ 
-            display: none;/* hide on mobile*/
-        }
         @media (min-width: 768px) {
-            .mobile{
-                display: none;
-            }
-            .desktop{
-                display: initial;
-            }
-             /* ======================= Main menu ======================= */
-            .buttonSplitter button {
-                height: 9.5vh;
-            }
-            .logoButton{
-                order: -1;
-            }
-            
-
             /* ============================================== SIDE MENU ============================================== */
             .sideMenu{
                 position: fixed;
@@ -331,12 +230,17 @@
                 right: 0;
                 width: var(--borderSize);
                 font-size: var(--borderSize);
-                height: 83.5%;
+                height: 82%;
                 overflow: hidden;
             }
             .statsContainer {
                 white-space: nowrap;
                 transform: rotate(90deg) translateX(var(--statScroll));
+            }
+
+            
+            .music>img{
+                --imageWidth: 40%!important;
             }
             /* ======================= Selection ======================= */
             .selectSection{
@@ -366,7 +270,6 @@
                 position: absolute;
                 width: var(--galeryWidth);
                 right: 0;
-            /* background-color: #151215; */
             }
             .illustration{
                 width: 100%;
@@ -445,20 +348,24 @@
 
     <div class="askarMTopCollection2010">
         <div class="illustration"></div>
-        <div class="bannerContainer">
-            <div class="banner illustEndContainer">
-                <span class="illustEnd">end of illustration section | </span>
-                <span class="illustEnd"></span><span class="illustEnd"></span><span class="illustEnd"></span><span class="illustEnd"></span>
-                <span class="illustEnd"></span><span class="illustEnd"></span><span class="illustEnd"></span><span class="illustEnd"></span>
-            </div>
-            <div class="banner musicStartContainer">
-                <span class="musicStart">start of music section | </span>
-                <span class="musicStart"></span><span class="musicStart"></span><span class="musicStart"></span>
-                <span class="musicStart"></span><span class="musicStart"></span><span class="musicStart"></span>
-                <span class="musicStart"></span><span class="musicStart"></span><span class="musicStart"></span>
+            <div class="bannerContainer">
+                <div class="bannerBg">
+                    <div class="banner illustEndContainer">
+                        <span class="illustEnd">end of illustration section | </span>
+                        <span class="illustEnd"></span><span class="illustEnd"></span><span class="illustEnd"></span><span class="illustEnd"></span>
+                        <span class="illustEnd"></span><span class="illustEnd"></span><span class="illustEnd"></span><span class="illustEnd"></span>
+                    </div>
+                </div>
+            <div class="bannerBg">
+                <div class="banner musicStartContainer">
+                    <span class="musicStart">start of music section | </span>
+                    <span class="musicStart"></span><span class="musicStart"></span><span class="musicStart"></span>
+                    <span class="musicStart"></span><span class="musicStart"></span><span class="musicStart"></span>
+                    <span class="musicStart"></span><span class="musicStart"></span><span class="musicStart"></span>
+                </div>
             </div>
         </div>
-        <div id="music" class="music" style="position: absolute; top: 150vh; right: 0; height: 200vh;">
+        <div id="music" class="music">
             <div class="musicEnd"></div>
         </div>
     </div>
@@ -592,12 +499,14 @@
                 let spanText =  mainSpan.innerHTML;
                 let bannerScroll = randomInt(0,-50);
                 let container = mainSpan.parentNode;
+                let bgColor = container.parentNode;
                 // mainSpan.style.setProperty("--scroll", value);
 
                 spans.forEach(
                     span => span.innerHTML = spanText
                 )
-                container.style.transform=`rotate(${index*16 - 8}deg) translate(var(--bannerScroll),12vh)`;
+                bgColor.style.transform=`rotate(${index*16 - 8}deg) translateY(12vh) scale(110%)`;
+                container.style.transform=`translateX(var(--bannerScroll))`;
                 setInterval(()=>{
                     spanWidth = mainSpan.offsetWidth;
                     bannerScroll = (bannerScroll - (index+1)) % spanWidth;
@@ -649,12 +558,12 @@
         let scrollSpeed = 0;
         let normalImgWidth = 40;//%
 
-        let musicSectOffset = 100 //vh
+        let musicSectOffset = 50 //vh
 
         const addUsedY = amount=>{
             usedY += amount;
             musicSect.style.top = `calc(${usedY}vw + ${musicSectOffset}vh)`;
-            bannerContainer.style.top = `calc(${usedY}vw + ${musicSectOffset}vh)`;
+            bannerContainer.style.top = `calc(${usedY}vw + ${musicSectOffset * 2/3}vh)`;
         }
         
         let artwork = []
