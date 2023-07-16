@@ -235,7 +235,12 @@
             rotate: -90deg;
         }
 
-        
+        .music{
+            width: 100%;
+        }
+        .music>img:hover{
+            transform: scale(100%)!important;
+        }
         .musicEnd{
             position: absolute;
             bottom: 0%;
@@ -250,7 +255,8 @@
             white-space: nowrap;
         }
         .banner{
-            background-color: #151215;
+            background-color: #000;
+            /* background-color: #151215; */
         }
         .musicStart{
             font-size: 2em;
@@ -299,6 +305,7 @@
                 width: var(--sideMenuWidth);
                 height: 100%;
                 overflow: hidden;
+                background-color: #000;
             }
             /* ======================= background ======================= */
             .bgDarken{
@@ -324,7 +331,7 @@
                 right: 0;
                 width: var(--borderSize);
                 font-size: var(--borderSize);
-                height: 79%;
+                height: 83.5%;
                 overflow: hidden;
             }
             .statsContainer {
@@ -359,6 +366,7 @@
                 position: absolute;
                 width: var(--galeryWidth);
                 right: 0;
+            /* background-color: #151215; */
             }
             .illustration{
                 width: 100%;
@@ -450,8 +458,7 @@
                 <span class="musicStart"></span><span class="musicStart"></span><span class="musicStart"></span>
             </div>
         </div>
-        <div id="music" class="music" style="position: absolute; top: 150vh; right: 0; height: 150vh;">
-            Test Msuci
+        <div id="music" class="music" style="position: absolute; top: 150vh; right: 0; height: 200vh;">
             <div class="musicEnd"></div>
         </div>
     </div>
@@ -628,6 +635,7 @@
                 img.style.transform = "rotate(-90deg)";
             })
         });
+        
         // ================================ image galery ================================
         let illustrationSect = document.querySelector('.illustration');
         let musicSect = document.querySelector('.music');
@@ -642,6 +650,12 @@
         let normalImgWidth = 40;//%
 
         let musicSectOffset = 100 //vh
+
+        const addUsedY = amount=>{
+            usedY += amount;
+            musicSect.style.top = `calc(${usedY}vw + ${musicSectOffset}vh)`;
+            bannerContainer.style.top = `calc(${usedY}vw + ${musicSectOffset/2}vh)`;
+        }
         
         let artwork = []
         for(let i=1;i<=10;i++){
@@ -657,13 +671,15 @@
         artworkTemplate.style.top = usedY + "px" ;
         artworkTemplate.style.setProperty("--imageWidth", "40%"); //later set this to 1/aspect ratio = x/y * 40%
         artworkTemplate.style.width = "var(--imageWidth)";
+        artworkTemplate.style.transition = "top 0.05s cubic-bezier(0.000, 0.500, 1.000, 0.500);";
         
         randomY = randomInt(1, 5);
         console.log(`window.innerWidth = ${window.innerWidth}`)
         if(window.innerWidth < 780){
+            //add space for rotatingCross
             randomY += 14
         }
-        usedY += randomY;
+        addUsedY(randomY);
         artwork.forEach(image => {
             randomX = random(0.3,0.7);
             usedX = (usedX + randomX) % 1
@@ -678,7 +694,6 @@
             img.style.left = `calc((100% - var(--imageWidth)) * ${usedX})` ;
             img.style.zIndex = randomZ-100;
             img.style.transform = `scale(${randomZ}%)`;
-            img.style.transition = "top 0.1s cubic-bezier(0.000, 0.500, 1.000, 0.500);";
 
             img.addEventListener('click', 
                 onClick => openImageViewer(image.HDSrc)
@@ -691,10 +706,7 @@
             illustrationSect.appendChild(img);
 
             randomY = randomInt(18, 24);
-            usedY += randomY;
-
-            musicSect.style.top = `calc(${usedY}vw + ${musicSectOffset}vh)`;
-            bannerContainer.style.top = `calc(${usedY}vw + ${musicSectOffset/2}vh)`;
+            addUsedY(randomY);
         })
         
         const updateScrollValue = (event) => {
@@ -704,51 +716,74 @@
         window.addEventListener('scroll', updateScrollValue);
         
         // ================================ Music Gallery =============================
-        let youtubeId = ["PLBMNSwkiIM","bB5V2IFRsjI","nKrineJ8vOM","Lc7WfsGBBJ8","OuDHdk8zmMU","MM0JaLumZjo"]
+        let youtubeId = ["PLBMNSwkiIM","bB5V2IFRsjI","nKrineJ8vOM","Lc7WfsGBBJ8","MM0JaLumZjo"]
+        let MusicTemplate = document.createElement("img");
+        let musicUsedY = 0;
+
         let music = []
         youtubeId.forEach(id => {
-            const j = {
+            const i = {
                 youtubeLink : `https://youtu.be/${id}`,
+                audio       : `asset/music/audio/${id}.mp3`,
                 SDImgSrc    : `https://img.youtube.com/vi/${id}/sddefault.jpg`,
-                HDImgSrc    : `https://img.youtube.com/vi/${id}/mqdefault.jpg`,
-                UHDImgSrc   : `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
-                FHDImgSrc   : `https://img.youtube.com/vi/${id}/maxresdefault.jpg`,
-            };
-            music.push(j);
+                MQImgSrc    : `https://img.youtube.com/vi/${id}/mqdefault.jpg`,
+                HQImgSrc    : `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
+                bestImgSrc  : `https://img.youtube.com/vi/${id}/maxresdefault.jpg`,
+            }; 
+            music.push(i);
         });
-            
-            // randomX = random(0.3,0.7);
-            // usedX = (usedX + randomX) % 1
-            // randomZ = randomInt(50, 90);
-            // scrollSpeed = (randomZ-50)/-40;   // 0-40 /-80
+        (() => { // for variable scoping
+            const id = "OuDHdk8zmMU";
+            const storyWEnd = {
+                youtubeLink: `https://youtu.be/${id}`,
+                audio: `asset/music/audio/${id}.mp3`,
+                SDImgSrc: `asset/music/StoryWEnd.gif`,
+                MQImgSrc: `asset/music/StoryWEnd.gif`,
+                HQImgSrc: `asset/music/StoryWEnd.gif`,
+                BestImgSrc: `asset/music/StoryWEnd.gif`,
+            }; 
+            music.push(storyWEnd);
+        })();
 
-            // let img = artworkTemplate.cloneNode();
 
-            // img.src = image.lowSrc;
-            // // img.style.top = usedY + "vw" ;
-            // img.style.top = `calc( ${usedY}vw + var(--scroll)*${scrollSpeed} - ${usedY}vw*${scrollSpeed})`;
-            // img.style.left = `calc((100% - var(--imageWidth)) * ${usedX})` ;
-            // img.style.zIndex = randomZ-100;
-            // img.style.transform = `scale(${randomZ}%)`;
-            // img.style.transition = "top 0.1s cubic-bezier(0.000, 0.500, 1.000, 0.500);";
+        MusicTemplate.src = "",
+        MusicTemplate.style.position = "absolute";
+        MusicTemplate.style.top = "0px" ;
+        MusicTemplate.style.transform = `scale(90%)`;
+        MusicTemplate.style.setProperty("--imageWidth", "40%"); //later set this to 1/aspect ratio = x/y * 40%
+        MusicTemplate.style.width = "var(--imageWidth)";
+        MusicTemplate.style.transition = "top 0.05s cubic-bezier(0.000, 0.500, 1.000, 0.500);";
 
-            // img.addEventListener('click', 
-            //     onClick => openImageViewer(image.HDSrc)
-            // );
-            // img.addEventListener('load',
-            // onLoad => { 
-            //     img.style.setProperty("--imageWidth", 45 * Math.sqrt(img.offsetWidth/img.offsetHeight) + "%");
-            // });
+        imageHeight = 100/(music.length+2);
+        
+        music.forEach((music, index, arr) => {
+            const song = new Audio(music.audio);
+            randomX = random(0.3,0.7);
+            usedX = (usedX + randomX) % 1
+            randomZ = randomInt(50, 90);
 
-            // illustrationSect.appendChild(img);
+            let img = MusicTemplate.cloneNode();
 
-            // randomY = randomInt(18, 24);
-            // usedY += randomY;
+            img.src = music.MQImgSrc;
+            img.style.top = `${(index+1) * imageHeight}%`;
+            img.style.left = `calc((100% - var(--imageWidth)) * ${usedX})` ;
 
-            // musicSect.style.top = `calc(${usedY}vw + ${musicSectOffset}vh)`;
-            // bannerContainer.style.top = `calc(${usedY}vw + ${musicSectOffset/2}vh)`;
-        // });
-        //https://img.youtube.com/vi/cGSNaQ8EoS0/sddefault.jpg
+            img.addEventListener('click', 
+                onClick => window.open(music.youtubeLink, '_blank')
+            );
+                
+            img.addEventListener('mouseover',
+                play => song.play()
+            );
+
+            img.addEventListener('mouseout', 
+                stop => {
+                    song.pause();
+                    song.currentTime = 0;
+            });
+
+            musicSect.appendChild(img);
+        });
         
         // ================================ image full display ================================
         let roll = document.querySelector('.rotation');
