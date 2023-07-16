@@ -45,6 +45,7 @@ body{
 }
 .buttonSplitter button:hover{
     color: #000;
+    font-weight: 1000 !important;  
 }
 .selectedButton{
     color: #000 !important;
