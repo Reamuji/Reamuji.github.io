@@ -149,7 +149,7 @@
             top: 100vh; 
             right: 0; 
             width: 100%; 
-            height: 250vh;
+            height: 275vh;
         }
         .music>img{
             --imageWidth: 70%!important;
@@ -634,10 +634,11 @@
             const i = {
                 youtubeLink : `https://youtu.be/${id}`,
                 audio       : `asset/music/audio/${id}.mp3`,
-                SDImgSrc    : `https://img.youtube.com/vi/${id}/sddefault.jpg`,
-                MQImgSrc    : `https://img.youtube.com/vi/${id}/mqdefault.jpg`,
-                HQImgSrc    : `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
-                bestImgSrc  : `https://img.youtube.com/vi/${id}/maxresdefault.jpg`,
+                gifImgSrc    : `asset/music/gif/${id}.gif`,
+                // SDImgSrc    : `https://img.youtube.com/vi/${id}/sddefault.jpg`,
+                // MQImgSrc    : `https://img.youtube.com/vi/${id}/mqdefault.jpg`,
+                // HQImgSrc    : `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
+                // bestImgSrc  : `https://img.youtube.com/vi/${id}/maxresdefault.jpg`,
             }; 
             music.push(i);
         });
@@ -646,50 +647,89 @@
             const storyWEnd = {
                 youtubeLink: `https://youtu.be/${id}`,
                 audio: `asset/music/audio/${id}.mp3`,
-                SDImgSrc: `asset/music/StoryWEnd.gif`,
-                MQImgSrc: `asset/music/StoryWEnd.gif`,
-                HQImgSrc: `asset/music/StoryWEnd.gif`,
-                BestImgSrc: `asset/music/StoryWEnd.gif`,
+                gifImgSrc    : `asset/music/gif/${id}.gif`,
+                // SDImgSrc: `asset/music/StoryWEnd.gif`,
+                // MQImgSrc: `asset/music/StoryWEnd.gif`,
+                // HQImgSrc: `asset/music/StoryWEnd.gif`,
+                // BestImgSrc: `asset/music/StoryWEnd.gif`,
             }; 
             music.push(storyWEnd);
         })();
 
 
+        imgWidth = 50; //vw
         MusicTemplate.src = "",
         MusicTemplate.style.position = "absolute";
         MusicTemplate.style.top = "0px" ;
-        MusicTemplate.style.transform = `scale(90%)`;
-        MusicTemplate.style.setProperty("--imageWidth", "40%"); //later set this to 1/aspect ratio = x/y * 40%
+        MusicTemplate.style.transform = `scale(95%)`;
+        MusicTemplate.style.setProperty("--imageWidth", imgWidth+"vw"); //later set this to 1/aspect ratio = x/y * 40%
         MusicTemplate.style.width = "var(--imageWidth)";
+        // MusicTemplate.style.setProperty("--imageWidth", "40%"); //later set this to 1/aspect ratio = x/y * 40%
+        // MusicTemplate.style.width = "var(--imageWidth)";
         MusicTemplate.style.transition = "top 0.05s cubic-bezier(0.000, 0.500, 1.000, 0.500);";
 
+        musicSect.style.height = (imgWidth * 9/16 * music.length)+"vw";
         imageHeight = 100/(music.length+2);
         
         music.forEach((music, index, arr) => {
-            const song = new Audio(music.audio);
-            randomX = random(0.3,0.7);
+            randomX = random(0.3,0.6);
             usedX = (usedX + randomX) % 1
             randomZ = randomInt(50, 90);
+            audioFadeIn = 600;
+            audioFadeOut = 300;
 
             let img = MusicTemplate.cloneNode();
+            
+            let song = new Audio(music.audio);
+            song.volume=0;
 
-            img.src = music.MQImgSrc;
+            img.src = music.gifImgSrc;
             img.style.top = `${(index+1) * imageHeight}%`;
             img.style.left = `calc((100% - var(--imageWidth)) * ${usedX})` ;
+
+            let turn = 0;
+
+            function turnVolume(to, time/*in ms*/,id = null){
+                if(id == null){
+                    //set an id
+                    turn++;
+                    id = turn;
+                }
+                //stop if another call Detected
+                if(turn != id){
+                    return;
+                }
+                    
+                let step = 50;
+                let percent = step/time
+                if(percent >= 1){
+                    song.volume = to;
+                    if(to == 0){
+                            song.currentTime = 0;
+                            song.pause()
+                    }
+                    return;
+                }
+                let newVolume = song.volume + (to-song.volume)*percent
+                song.volume = newVolume;
+                console.log(newVolume)
+                
+                setTimeout(onNextStep => turnVolume(to, time-step, id),step);
+            }
 
             img.addEventListener('click', 
                 onClick => window.open(music.youtubeLink, '_blank')
             );
                 
             img.addEventListener('mouseover',
-                play => song.play()
-            );
+                async play => {
+                    song.play();
+                    turnVolume(1,audioFadeIn);
+            });
 
             img.addEventListener('mouseout', 
-                stop => {
-                    song.pause();
-                    song.currentTime = 0;
-            });
+                stop => turnVolume(0,audioFadeOut)
+            );
 
             musicSect.appendChild(img);
         });

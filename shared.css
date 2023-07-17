@@ -38,7 +38,7 @@ body{
     font-family: "Noto Serif", serif;
     font-weight: 600;    
     /* color: #444; */
-    font-size: min(25px,3vw,5vh);
+    font-size: min(22px,3vw,5vh);
     background-color:#0000;
     height: min(11vh,11vw);
     border-color: #0000;
