@@ -583,7 +583,6 @@
         artworkTemplate.style.transition = "top 0.05s cubic-bezier(0.000, 0.500, 1.000, 0.500);";
         
         randomY = randomInt(1, 5);
-        console.log(`window.innerWidth = ${window.innerWidth}`)
         if(window.innerWidth < 780){
             //add space for rotatingCross
             randomY += 14
@@ -658,6 +657,7 @@
 
 
         imgWidth = 50; //vw
+        
         MusicTemplate.src = "",
         MusicTemplate.style.position = "absolute";
         MusicTemplate.style.top = "0px" ;
@@ -668,7 +668,17 @@
         // MusicTemplate.style.width = "var(--imageWidth)";
         MusicTemplate.style.transition = "top 0.05s cubic-bezier(0.000, 0.500, 1.000, 0.500);";
 
-        musicSect.style.height = (imgWidth * 9/16 * music.length)+"vw";
+        
+        const adjustMusicSectSize = ()=>{
+            if(window.innerWidth < 780){
+                musicSect.style.height = (100 * 9/16 * music.length)+"vw";
+            }else{
+                musicSect.style.height = (imgWidth * 9/16 * music.length)+"vw";
+            }
+        }
+        window.addEventListener('resize', adjustMusicSectSize)
+
+        
         imageHeight = 100/(music.length+2);
         
         music.forEach((music, index, arr) => {
