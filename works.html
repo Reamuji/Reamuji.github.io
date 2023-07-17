@@ -740,7 +740,8 @@
             let img = MusicTemplate.cloneNode();
             
             let song = new Audio(music.audio);
-            song.volume=0;
+            song.volume = 0;
+            song.loop = true;
 
             img.src = music.gifImgSrc;
             img.style.top = `${(index+1) * imageHeight}%`;
