@@ -13,7 +13,7 @@
         </script>
         <style>
             :root{
-                --scrollDuration:75s;
+                --scrollDuration:120s;
                 --tinggiPantulan:20%;
                 --blurPantulan:10px; /* makin gede makin blur*/
                 --usedWidth:100vw;   /* Buat ngatur lebar  layar gambar ngescroll | vw = % lebar  layar */
@@ -48,6 +48,7 @@
                 height: 100%;
                 display: flex;
                 animation:scroll-left var(--scrollDuration) linear infinite;
+                gap: 4vh; /* ====================================================experiemntal */
             }
             .imgContainer img{
                 height: 100%;
@@ -60,6 +61,7 @@
                     flex-direction: column;
                     animation:scroll-up var(--scrollDuration) linear infinite;
                     width: 100%;
+                    gap: 0vh; /* ====================================================experiemntal */
                 }
                 .imgContainer img{
                     width: 100%;
@@ -88,13 +90,13 @@
                 height: 20vh;
                 margin: 0 auto;
                 position: relative;
+                filter: blur(var(--blurPantulan));
             }
             #reflection {
                 position: absolute;
                 top: 100%;
                 left: 0;
                 transform: scaleY(-1) translate(0,var(--tinggiPantulan));
-                filter: blur(var(--blurPantulan));
                 /* -webkit-mask-image:-webkit-gradient(linear, left top, left bottom, from(#0000), to(#0009)) */
                 mask-image: linear-gradient(to bottom, transparent, #0009);
                 -webkit-mask-image: linear-gradient(to bottom, transparent, #0009);
@@ -124,9 +126,6 @@
                 max-width: 33%;
                 max-height: 20%;
             }
-
-            
-
             </style>
         </head>
         <body>
@@ -166,7 +165,7 @@
                             </span>
                         </div>
                     </button>
-                    <button class="selectedButton" >
+                    <button id="selectedButton" >
                         <img class="mobile" src="asset\logo\menuLogo\home.webp" alt="Home">
                         <span class="desktop">Home</span>
                     </button>

@@ -35,6 +35,8 @@
             width: 98vw;
             height: 100%;
         }
+
+        
         /* ============================================== imgViewer ============================================== */
         .imgViewer{
             position: fixed;
@@ -143,7 +145,7 @@
         .rotated.crossRight{
             rotate: -90deg;
         }
-
+        /* ===============================music =================== */
         .music{
             position: absolute;
             top: 100vh; 
@@ -156,6 +158,7 @@
         }
         .music>img:hover{
             transform: scale(100%)!important;
+            cursor: pointer;
         }
         .musicEnd{
             position: absolute;
@@ -178,6 +181,23 @@
         .musicStart{
             font-size: 2.5em;
         }
+
+        .musicLeft,.musicRight {
+            position: absolute;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .musicLeft {
+            left: 0;
+        }
+
+        .musicRight {
+            right: 0;
+        }
+
         /* ============================================== SCROLLBAR ============================================== */
         ::-webkit-scrollbar {
             width: 10px;
@@ -193,7 +213,11 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #fffa; 
         }
-        
+        /* Adjust the main menu to match the width of the scrollbar */
+        .buttonContainer{
+            margin-left: 5px; 
+        }
+
         /* ============================================== DESKTOP ============================================== */
         @media (min-width: 768px) {
             /* ============================================== SIDE MENU ============================================== */
@@ -257,12 +281,13 @@
 
             /* ======== Button ======== */
             .selectSection a{
-            color:#bbb;
-            text-decoration: inherit; /* no underline */
+                color:#bbb;
+                text-decoration: inherit; /* no underline */
             }
             a:hover{
-            color:#fff;
-            text-decoration: inherit; /* no underline */
+                color:#fff;
+                text-decoration: inherit; /* no underline */
+                cursor: pointer;
             }
 
             /* ============================================== GALERY ============================================== */
@@ -307,15 +332,16 @@
             }
 
             .illustration img{
-                transition: transform 0.5s ease-in-out;
+                transition: transform 0.2s ease-in-out;
                 transform-origin: center;
             }
             .illustration img:hover{
-                transform: scale(100%)!important;
+                /* transform: scale(100%)!important; */
+                transform: scale(calc(1.15% * var(--randomZ)))!important;
                 z-index:-1!important;
+                /* cursor: zoom-in; */
+                cursor: pointer;
             }
-
-            
         }
     </style>
 </head>
@@ -398,7 +424,7 @@
                 <img class="mobile" src="asset\logo\menuLogo\home.webp" alt="Home">
                 <span class="desktop">Home</span>
             </button>
-            <button class="selectedButton">
+            <button id="selectedButton">
                 <img class="mobile" src="asset\logo\menuLogo\works.webp" alt="Works">
                 <span class="desktop">Works</span>
             </button>
@@ -591,8 +617,8 @@
         artwork.forEach(image => {
             randomX = random(0.3,0.7);
             usedX = (usedX + randomX) % 1
-            randomZ = randomInt(50, 90);
-            scrollSpeed = (randomZ-50)/-40;   // 0-40 /-80
+            randomZ = randomInt(50, 80);
+            scrollSpeed = (randomZ-50)/-30;   //  = 0to30 /-30 = 0to-1
 
             let img = artworkTemplate.cloneNode();
 
@@ -601,7 +627,9 @@
             img.style.top = `calc( ${usedY}vw + var(--scroll)*${scrollSpeed} - ${usedY}vw*${scrollSpeed})`;
             img.style.left = `calc((100% - var(--imageWidth)) * ${usedX})` ;
             img.style.zIndex = randomZ-100;
-            img.style.transform = `scale(${randomZ}%)`;
+
+            img.style.setProperty("--randomZ", randomZ);
+            img.style.transform = `scale(calc(1% * var(--randomZ)))`;
 
             img.addEventListener('click', 
                 onClick => openImageViewer(image.HDSrc)
@@ -661,14 +689,14 @@
         MusicTemplate.src = "",
         MusicTemplate.style.position = "absolute";
         MusicTemplate.style.top = "0px" ;
-        MusicTemplate.style.transform = `scale(95%)`;
+        // MusicTemplate.style.transform = `scale(95%)`;
         MusicTemplate.style.setProperty("--imageWidth", imgWidth+"vw"); //later set this to 1/aspect ratio = x/y * 40%
         MusicTemplate.style.width = "var(--imageWidth)";
         // MusicTemplate.style.setProperty("--imageWidth", "40%"); //later set this to 1/aspect ratio = x/y * 40%
         // MusicTemplate.style.width = "var(--imageWidth)";
         MusicTemplate.style.transition = "top 0.05s cubic-bezier(0.000, 0.500, 1.000, 0.500);";
+        // MusicTemplate.setAttribute('mouseIsInside', 'false');
 
-        
         const adjustMusicSectSize = ()=>{
             if(window.innerWidth < 780){
                 musicSect.style.height = (100 * 9/16 * music.length)+"vw";
@@ -679,6 +707,27 @@
         window.addEventListener('resize', adjustMusicSectSize)
 
         
+        let onHoverPlay = "asset/music/hover.png"
+        let onHoverPause = "asset/music/hoverPause.png"
+
+        let currentlyPlaying
+        function turnVolume(Audio, to, time/*in ms*/){
+            let step = 50;
+            let percent = step/time
+            if(percent >= 1){
+                Audio.volume = to;
+                if(to == 0){
+                    Audio.currentTime = 0;
+                    Audio.pause()
+                }
+                return;
+            }
+            let newVolume = Audio.volume + (to-Audio.volume)*percent
+            Audio.volume = newVolume;
+            
+            setTimeout(onNextStep => turnVolume(Audio, to, time-step),step);
+        }
+
         imageHeight = 100/(music.length+2);
         
         music.forEach((music, index, arr) => {
@@ -698,48 +747,65 @@
             img.style.left = `calc((100% - var(--imageWidth)) * ${usedX})` ;
 
             let turn = 0;
-
-            function turnVolume(to, time/*in ms*/,id = null){
-                if(id == null){
-                    //set an id
-                    turn++;
-                    id = turn;
-                }
-                //stop if another call Detected
-                if(turn != id){
-                    return;
-                }
-                    
-                let step = 50;
-                let percent = step/time
-                if(percent >= 1){
-                    song.volume = to;
-                    if(to == 0){
-                            song.currentTime = 0;
-                            song.pause()
-                    }
-                    return;
-                }
-                let newVolume = song.volume + (to-song.volume)*percent
-                song.volume = newVolume;
-                console.log(newVolume)
-                
-                setTimeout(onNextStep => turnVolume(to, time-step, id),step);
-            }
-
+            
             img.addEventListener('click', 
-                onClick => window.open(music.youtubeLink, '_blank')
+                function(event) {
+                    const elementRect = event.target.getBoundingClientRect();
+                    const elementLeft = elementRect.left;
+                    const elementWidth = elementRect.width;
+                    const clickX = event.clientX;
+
+                    // Calculate the center of the element
+                    const elementCenter = elementLeft + elementWidth / 2;
+
+                    // Compare the click position with the element center
+                    if (clickX < elementCenter) {
+                        // Clicked on the left side of the element
+                        console.log('Clicked on the left side');
+                        // let mouseIsInside = img.getAttribute("mouseIsInside");
+                        if(song.paused){
+                            try{ if(currentlyPlaying != song)
+                                turnVolume(currentlyPlaying, 0, audioFadeOut)
+                            } catch{}
+                            currentlyPlaying = song;
+                            song.play();
+                            song.volume = 0;
+                            turnVolume(song,1,audioFadeIn);
+                            img.src = onHoverPause;
+                        }else{
+                            img.src = onHoverPlay;
+                            turnVolume(song,0,audioFadeOut)
+                        }
+                    } else {
+                        // Clicked on the right side of the element
+                        console.log('Clicked on the right side');
+                        window.open(music.youtubeLink, '_blank');
+                    }
+                }
             );
-                
             img.addEventListener('mouseover',
-                async play => {
-                    song.play();
-                    turnVolume(1,audioFadeIn);
+                showButton => {    
+                    img.src = song.paused ? onHoverPlay : onHoverPause;
+                    // img.setAttribute('mouseIsInside', 'true');
             });
 
-            img.addEventListener('mouseout', 
-                stop => turnVolume(0,audioFadeOut)
-            );
+            img.addEventListener('mouseout',
+                hideButton => {    
+                    img.src = music.gifImgSrc;
+                    // img.setAttribute('mouseIsInside', 'false');
+            });
+            // img.addEventListener('click', 
+            //     onClick => window.open(music.youtubeLink, '_blank')
+            // )
+            // img.addEventListener('mouseover',
+            //     async play => {
+            //         song.play();
+            //         turnVolume(1,audioFadeIn);
+            // });
+
+            // img.addEventListener('mouseout', 
+            //     stop => turnVolume(0,audioFadeOut)
+            // );
 
             musicSect.appendChild(img);
         });
