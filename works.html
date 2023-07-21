@@ -83,7 +83,7 @@
             width: 35vw;
             aspect-ratio: 1/1;
             transform: translate(-50%,-25%);
-            /* mix-blend-mode: difference; */
+            /* mix-blend-mode: difference;z */
         }
         .rollCenter{
             position: fixed;
@@ -755,6 +755,13 @@
 
             let song = new Audio(music.audio);
             song.volume = 0;
+
+            
+            img.addEventListener('load',
+            onLoad => {
+                ui.style.width = img.offsetWidth + "px";
+                ui.style.height = img.offsetHeight + "px";
+            });
 
             let turn = 0;
             
