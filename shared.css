@@ -23,8 +23,8 @@ body{
     padding: 0px 5px;
     position: fixed;
     bottom: 5%;
-    backdrop-filter: brightness(0.4);
-    mix-blend-mode: lighten;
+    /* backdrop-filter: brightness(0.4); */
+    /* mix-blend-mode: lighten; */
 }
 @media only screen and (max-width: 1200px) {
     .buttonContainer{
@@ -40,6 +40,9 @@ body{
     grid-template-columns: auto repeat(4, 1fr);
     border-radius: 50vh;
     justify-content:space-between; */
+}
+.buttonSplitter span {
+    color: #000;
 }
 .buttonSplitter button {
     appearance: none;
@@ -66,7 +69,7 @@ body{
 #selectedButton{
     color: #000;
     background-color: #fff;
-    font-weight: 1000 ;    
+    font-weight: 1000 ;
     cursor: default;
 }
 /* ======================= animated logo ======================= */
@@ -81,11 +84,12 @@ body{
     align-items: center;
     height: 100%;
     border-color: #0000!important;
+    cursor: default;
 }
 
 .logoButton:has(.KRNC) {
     border-color: #0000!important;
-    background-color: #fff!important;
+    background-color: #0000!important;
 }
 
 .KRNC img {
@@ -124,6 +128,16 @@ button img{
     order: 2;
 }
 
+#logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+}
+#logo img{
+    max-width: 33%;
+    max-height: 20%;
+}
 .desktop{ 
     display: none;/* hide on mobile*/
 }

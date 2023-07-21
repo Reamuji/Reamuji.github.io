@@ -83,7 +83,7 @@
             width: 35vw;
             aspect-ratio: 1/1;
             transform: translate(-50%,-25%);
-            mix-blend-mode: difference;
+            /* mix-blend-mode: difference; */
         }
         .rollCenter{
             position: fixed;
@@ -261,7 +261,6 @@
                 white-space: nowrap;
                 transform: rotate(90deg) translateX(var(--statScroll));
             }
-
             
             .music>img{
                 --imageWidth: 40%!important;
@@ -328,7 +327,6 @@
             }
             polyline{
                 transform: scale(var(--svgScale)); /* Set the desired scale factor */
-                z-index:1003;
             }
 
             .illustration img{
@@ -454,6 +452,8 @@
 
 
     <script>
+        //request client - turn off right click
+
         const root = document.documentElement;
 		const setValue  = (varName,value)   => root.style.setProperty("--"+varName, value);
         const getValue  = (varName)         => getComputedStyle(root).getPropertyValue("--"+varName);
@@ -607,6 +607,8 @@
         artworkTemplate.style.setProperty("--imageWidth", "40%"); //later set this to 1/aspect ratio = x/y * 40%
         artworkTemplate.style.width = "var(--imageWidth)";
         artworkTemplate.style.transition = "top 0.05s cubic-bezier(0.000, 0.500, 1.000, 0.500);";
+        artworkTemplate.setAttribute("loading", "lazy");
+        artworkTemplate.setAttribute("oncontextmenu", "return false;");
         
         randomY = randomInt(1, 5);
         if(window.innerWidth < 780){
@@ -623,8 +625,8 @@
             let img = artworkTemplate.cloneNode();
 
             img.src = image.lowSrc;
-            // img.style.top = usedY + "vw" ;
-            img.style.top = `calc( ${usedY}vw + var(--scroll)*${scrollSpeed} - ${usedY}vw*${scrollSpeed})`;
+            img.style.top = usedY + "vw" ;
+            // img.style.top = `calc( ${usedY}vw + var(--scroll)*${scrollSpeed} - ${usedY}vw*${scrollSpeed})`;
             img.style.left = `calc((100% - var(--imageWidth)) * ${usedX})` ;
             img.style.zIndex = randomZ-100;
 
@@ -653,13 +655,13 @@
         
         // ================================ Music Gallery =============================
         let youtubeId = ["PLBMNSwkiIM","bB5V2IFRsjI","nKrineJ8vOM","Lc7WfsGBBJ8","MM0JaLumZjo"]
-        let MusicTemplate = document.createElement("img");
+        let musicTemplate = document.createElement("img");
         let musicUsedY = 0;
 
         let music = []
         youtubeId.forEach(id => {
             const i = {
-                youtubeLink : `https://youtu.be/${id}`,
+                youtubeLink : `https://youtu.be/${id}?t=0s`,
                 audio       : `asset/music/audio/${id}.mp3`,
                 gifImgSrc    : `asset/music/gif/${id}.gif`,
                 // SDImgSrc    : `https://img.youtube.com/vi/${id}/sddefault.jpg`,
@@ -672,7 +674,7 @@
         (() => { // for variable scoping
             const id = "OuDHdk8zmMU";
             const storyWEnd = {
-                youtubeLink: `https://youtu.be/${id}`,
+                youtubeLink: `https://youtu.be/${id}?t=0s`,
                 audio: `asset/music/audio/${id}.mp3`,
                 gifImgSrc    : `asset/music/gif/${id}.gif`,
                 // SDImgSrc: `asset/music/StoryWEnd.gif`,
@@ -686,16 +688,16 @@
 
         imgWidth = 50; //vw
         
-        MusicTemplate.src = "",
-        MusicTemplate.style.position = "absolute";
-        MusicTemplate.style.top = "0px" ;
-        // MusicTemplate.style.transform = `scale(95%)`;
-        MusicTemplate.style.setProperty("--imageWidth", imgWidth+"vw"); //later set this to 1/aspect ratio = x/y * 40%
-        MusicTemplate.style.width = "var(--imageWidth)";
-        // MusicTemplate.style.setProperty("--imageWidth", "40%"); //later set this to 1/aspect ratio = x/y * 40%
-        // MusicTemplate.style.width = "var(--imageWidth)";
-        MusicTemplate.style.transition = "top 0.05s cubic-bezier(0.000, 0.500, 1.000, 0.500);";
-        // MusicTemplate.setAttribute('mouseIsInside', 'false');
+        musicTemplate.src = "",
+        musicTemplate.style.position = "absolute";
+        musicTemplate.style.top = "0px" ;
+        musicTemplate.style.setProperty("--imageWidth", imgWidth+"vw"); //later set this to 1/aspect ratio = x/y * 40%
+        musicTemplate.style.width = "var(--imageWidth)";
+        musicTemplate.style.transition = "top 0.05s cubic-bezier(0.000, 0.500, 1.000, 0.500);";
+        musicTemplate.setAttribute("oncontextmenu", "return false;");
+        // musicTemplate.style.setProperty("--imageWidth", "40%"); //later set this to 1/aspect ratio = x/y * 40%
+        // musicTemplate.style.width = "var(--imageWidth)";
+        // musicTemplate.setAttribute('mouseIsInside', 'false');
 
         const adjustMusicSectSize = ()=>{
             if(window.innerWidth < 780){
@@ -706,9 +708,10 @@
         }
         window.addEventListener('resize', adjustMusicSectSize)
 
-        
-        let onHoverPlay = "asset/music/hover.png"
-        let onHoverPause = "asset/music/hoverPause.png"
+        // let musicUiOnPause = "asset/music/hover.png";
+        // let musicUiOnPlay = "asset/music/hoverPause.png";
+        let musicUiOnPlay = "asset/music/UI/onPlay.png";
+        let musicUiOnPause = "asset/music/UI/onPause.png";
 
         let currentlyPlaying
         function turnVolume(Audio, to, time/*in ms*/){
@@ -737,19 +740,25 @@
             audioFadeIn = 600;
             audioFadeOut = 300;
 
-            let img = MusicTemplate.cloneNode();
-            
-            let song = new Audio(music.audio);
-            song.volume = 0;
-            song.loop = true;
+            let img = musicTemplate.cloneNode();
 
             img.src = music.gifImgSrc;
             img.style.top = `${(index+1) * imageHeight}%`;
             img.style.left = `calc((100% - var(--imageWidth)) * ${usedX})` ;
 
+            let ui = img.cloneNode();
+            ui.src = musicUiOnPause;
+            ui.style.transition = "opacity 0.5s ease-in-out";
+            ui.style.opacity = 0;
+            ui.style.backgroundColor = "#fff3";
+            ui.style.backdropFilter= "blur(3px)";
+
+            let song = new Audio(music.audio);
+            song.volume = 0;
+
             let turn = 0;
             
-            img.addEventListener('click', 
+            ui.addEventListener('click', 
                 function(event) {
                     const elementRect = event.target.getBoundingClientRect();
                     const elementLeft = elementRect.left;
@@ -763,7 +772,7 @@
                     if (clickX < elementCenter) {
                         // Clicked on the left side of the element
                         console.log('Clicked on the left side');
-                        // let mouseIsInside = img.getAttribute("mouseIsInside");
+                        // let mouseIsInside = ui.getAttribute("mouseIsInside");
                         if(song.paused){
                             try{ if(currentlyPlaying != song)
                                 turnVolume(currentlyPlaying, 0, audioFadeOut)
@@ -772,9 +781,9 @@
                             song.play();
                             song.volume = 0;
                             turnVolume(song,1,audioFadeIn);
-                            img.src = onHoverPause;
+                            ui.src = musicUiOnPlay;
                         }else{
-                            img.src = onHoverPlay;
+                            ui.src = musicUiOnPause;
                             turnVolume(song,0,audioFadeOut)
                         }
                     } else {
@@ -784,31 +793,34 @@
                     }
                 }
             );
-            img.addEventListener('mouseover',
+            ui.addEventListener('mouseover',
                 showButton => {    
-                    img.src = song.paused ? onHoverPlay : onHoverPause;
-                    // img.setAttribute('mouseIsInside', 'true');
+                    ui.src = song.paused ? musicUiOnPause : musicUiOnPlay;
+                    ui.style.opacity = 1;
+                    // ui.setAttribute('mouseIsInside', 'true');
             });
 
-            img.addEventListener('mouseout',
+            ui.addEventListener('mouseout',
                 hideButton => {    
-                    img.src = music.gifImgSrc;
-                    // img.setAttribute('mouseIsInside', 'false');
+                    ui.style.opacity = 0;
+                    // ui.src = music.gifImgSrc;
+                    // ui.setAttribute('mouseIsInside', 'false');
             });
-            // img.addEventListener('click', 
+            // ui.addEventListener('click', 
             //     onClick => window.open(music.youtubeLink, '_blank')
             // )
-            // img.addEventListener('mouseover',
+            // ui.addEventListener('mouseover',
             //     async play => {
             //         song.play();
             //         turnVolume(1,audioFadeIn);
             // });
 
-            // img.addEventListener('mouseout', 
+            // ui.addEventListener('mouseout', 
             //     stop => turnVolume(0,audioFadeOut)
             // );
 
             musicSect.appendChild(img);
+            musicSect.appendChild(ui);
         });
         
         // ================================ image full display ================================
@@ -936,6 +948,7 @@
             mousePos.forEach((coor) => {
                 formattedPos += `${coor[0]},${coor[1]} `;
             });
+            // ubah jadi node ntar | ubah jadi node ntar | ubah jadi node ntar | ubah jadi node ntar | ubah jadi node ntar | ubah jadi node ntar
             svg.innerHTML = `
             <polyline 
                 points="${formattedPos}" 
