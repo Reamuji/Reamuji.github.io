@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>karunochi</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" type="image/x-icon" href="asset\logo\karunochi\other\iconLow.webp" />
+        <link rel="stylesheet" href="shared.css">
+        <style>
+            :root{
+            }
+            body{
+                background-color: black;
+                color: white;
+                padding: 0;
+                border: 0;
+                overflow: hidden;
+                width: 100vw;
+                width: 100vh;
+            }
+
+            .buttonContainer{
+                backdrop-filter: brightness(1);
+            }
+        </style>
+    </head>
+        <body>
+            <div class="buttonContainer">
+                <div class="buttonSplitter">
+                    <button class="logoButton">
+                        <div class="KRNC">
+                            <img src="asset\logo\karunochi\other\LogoAnimation\cross.webp">
+                            <span class="KRNCmid vertical">
+                                <img src="asset\logo\karunochi\other\LogoAnimation\LetterH.webp"   class="KRNChild logogram rotate">
+                                <img src="asset\logo\karunochi\other\LogoAnimation\IconH.webp"     class="KRNChild logoIcon rotate">
+                            </span>
+                            <span class="KRNCmid horizontal">
+                                <img src="asset\logo\karunochi\other\LogoAnimation\LetterV.webp"   class="KRNChild logogram rotate">
+                                <img src="asset\logo\karunochi\other\LogoAnimation\IconV.webp"     class="KRNChild logoIcon rotate">
+                            </span>
+                        </div>
+                    </button>
+                    <button >
+                        <img class="mobile" src="asset\logo\menuLogo\home.webp" alt="Home">
+                        <span class="desktop">Home</span>
+                    </button>
+                    <button onclick="window.location.href = './works.html';">
+                        <img class="mobile" src="asset\logo\menuLogo\works.webp" alt="Works">
+                        <span class="desktop">Works</span>
+                    </button>
+                    <button class="rightSideButton" id="selectedButton" >
+                        <img class="mobile" src="asset\logo\menuLogo\contact.webp" alt="Contact">
+                        <span class="desktop">Contact</span>
+                    </button>
+                    <button class="rightSideButton">
+                        <img class="mobile" src="asset\logo\menuLogo\commission.webp" alt="Commission">
+                        <span class="desktop">Commission</span>
+                    </button>
+                </div>
+            </div>
+        </body>
+    <script>
+        let root = document.documentElement;
+		const setValue = (varName,value) => root.style.setProperty(varName, value);
+        const getValue = (varName)       => getComputedStyle(root).getPropertyValue(varName);
+
+        // ================================ Rotate Logo ================================
+        const KRNC = document.querySelector('.KRNC')
+        const logogram = document.querySelectorAll('.logogram')
+        const logoIcon = document.querySelectorAll('.logoIcon')
+        KRNC.addEventListener('mouseover', () => {
+            logogram.forEach((img)=>{
+                img.style.transform = "rotate(90deg)";
+            })
+            logoIcon.forEach((img)=>{
+                img.style.transform = "rotate(0deg)";
+            })
+        });
+        KRNC.addEventListener('mouseout', () => {
+            logogram.forEach((img)=>{
+                img.style.transform = "rotate(0deg)";
+            })
+            logoIcon.forEach((img)=>{
+                img.style.transform = "rotate(-90deg)";
+            })
+        });
+    </script>
+</html>

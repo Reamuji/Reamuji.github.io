@@ -426,11 +426,11 @@
                 <img class="mobile" src="asset\logo\menuLogo\works.webp" alt="Works">
                 <span class="desktop">Works</span>
             </button>
-            <button class="rightSideButton">
+            <button class="rightSideButton" onclick="window.location.href = './contact.html';">
                 <img class="mobile" src="asset\logo\menuLogo\contact.webp" alt="Contact">
                 <span class="desktop">Contact</span>
             </button>
-            <button class="rightSideButton">
+            <button class="rightSideButton" onclick="window.location.href = './commission.html';">
                 <img class="mobile" src="asset\logo\menuLogo\commission.webp" alt="Commission">
                 <span class="desktop">Commission</span>
             </button>
@@ -606,7 +606,7 @@
         artworkTemplate.style.top = usedY + "px" ;
         artworkTemplate.style.setProperty("--imageWidth", "40%"); //later set this to 1/aspect ratio = x/y * 40%
         artworkTemplate.style.width = "var(--imageWidth)";
-        artworkTemplate.style.transition = "top 0.05s cubic-bezier(0.000, 0.500, 1.000, 0.500);";
+        artworkTemplate.style.transition = "top 0.1s cubic-bezier(0.000, 0.500, 1.000, 0.500);";
         artworkTemplate.setAttribute("loading", "lazy");
         artworkTemplate.setAttribute("oncontextmenu", "return false;");
         
@@ -619,14 +619,14 @@
         artwork.forEach(image => {
             randomX = random(0.3,0.7);
             usedX = (usedX + randomX) % 1
-            randomZ = randomInt(50, 80);
-            scrollSpeed = (randomZ-50)/-30;   //  = 0to30 /-30 = 0to-1
+            randomZ = randomInt(50, 90);
+            scrollSpeed = (randomZ-50)/-25;   //  = 0to30 /-30 = 0to-1
 
             let img = artworkTemplate.cloneNode();
 
             img.src = image.lowSrc;
-            img.style.top = usedY + "vw" ;
-            // img.style.top = `calc( ${usedY}vw + var(--scroll)*${scrollSpeed} - ${usedY}vw*${scrollSpeed})`;
+            // img.style.top = usedY + "vw" ;
+            img.style.top = `calc( ${usedY}vw + var(--scroll)*${scrollSpeed} - ${usedY}vw*${scrollSpeed})`;
             img.style.left = `calc((100% - var(--imageWidth)) * ${usedX})` ;
             img.style.zIndex = randomZ-100;
 
@@ -643,7 +643,7 @@
 
             illustrationSect.appendChild(img);
 
-            randomY = randomInt(18, 24);
+            randomY = randomInt(18, 20);
             addUsedY(randomY);
         })
         
@@ -693,7 +693,6 @@
         musicTemplate.style.top = "0px" ;
         musicTemplate.style.setProperty("--imageWidth", imgWidth+"vw"); //later set this to 1/aspect ratio = x/y * 40%
         musicTemplate.style.width = "var(--imageWidth)";
-        musicTemplate.style.transition = "top 0.05s cubic-bezier(0.000, 0.500, 1.000, 0.500);";
         musicTemplate.setAttribute("oncontextmenu", "return false;");
         // musicTemplate.style.setProperty("--imageWidth", "40%"); //later set this to 1/aspect ratio = x/y * 40%
         // musicTemplate.style.width = "var(--imageWidth)";
@@ -745,13 +744,15 @@
             img.src = music.gifImgSrc;
             img.style.top = `${(index+1) * imageHeight}%`;
             img.style.left = `calc((100% - var(--imageWidth)) * ${usedX})` ;
+            // img.style.filter = "blur(0px)";
 
             let ui = img.cloneNode();
             ui.src = musicUiOnPause;
             ui.style.transition = "opacity 0.5s ease-in-out";
             ui.style.opacity = 0;
             ui.style.backgroundColor = "#fff3";
-            ui.style.backdropFilter= "blur(3px)";
+            // ui.style.backdropFilter = "blur(3px)";
+            // ui.style.outline= "1px solid #888";
 
             let song = new Audio(music.audio);
             song.volume = 0;
@@ -761,6 +762,8 @@
             onLoad => {
                 ui.style.width = img.offsetWidth + "px";
                 ui.style.height = img.offsetHeight + "px";
+                // img.style.width = img.offsetWidth-4 + "px";
+                // img.style.height = img.offsetHeight-1 + "px";
             });
 
             let turn = 0;
@@ -804,12 +807,18 @@
                 showButton => {    
                     ui.src = song.paused ? musicUiOnPause : musicUiOnPlay;
                     ui.style.opacity = 1;
+                    // img.style.width = img.offsetWidth-1 + "px";
+                    // img.style.height = img.offsetHeight-1 + "px";
+                    img.style.filter = "blur(3px)";
                     // ui.setAttribute('mouseIsInside', 'true');
             });
 
             ui.addEventListener('mouseout',
                 hideButton => {    
                     ui.style.opacity = 0;
+                    // img.style.width = img.offsetWidth+1 + "px";
+                    // img.style.height = img.offsetHeight+1 + "px";
+                    img.style.filter = "blur(0px)";
                     // ui.src = music.gifImgSrc;
                     // ui.setAttribute('mouseIsInside', 'false');
             });

@@ -49,6 +49,7 @@
                 display: flex;
                 animation:scroll-left var(--scrollDuration) linear infinite;
                 gap: 4vh; /* ====================================================experiemntal */
+                margin-right: 4vh;
             }
             .imgContainer img{
                 height: 100%;
@@ -62,6 +63,7 @@
                     animation:scroll-up var(--scrollDuration) linear infinite;
                     width: 100%;
                     gap: 0vh; /* ====================================================experiemntal */
+                    margin-right: 0vh;
                 }
                 .imgContainer img{
                     width: 100%;
@@ -101,6 +103,11 @@
                 mask-image: linear-gradient(to bottom, transparent, #0009);
                 -webkit-mask-image: linear-gradient(to bottom, transparent, #0009);
 		  	}
+
+            /* .scatter{
+                filter: blur(10px) brightness(1);
+                mix-blend-mode: lighten;
+            } */
             
             .stack{
                 position: absolute;
@@ -129,6 +136,12 @@
             </style>
         </head>
         <body>
+            <!-- <div class="stack">
+                <div class="scatter askarMTopCollection2010">
+                    <div class="imgContainer"></div><div class="imgContainer"></div>
+                </div>
+            </div> -->
+
             <div class="stack">
                 <div class="askarMTopCollection2010">
                     <div class="imgContainer"></div><div class="imgContainer"></div>
@@ -141,7 +154,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="stack overlay">
             </div>
 
@@ -173,11 +185,11 @@
                         <img class="mobile" src="asset\logo\menuLogo\works.webp" alt="Works">
                         <span class="desktop">Works</span>
                     </button>
-                    <button class="rightSideButton">
+                    <button class="rightSideButton" onclick="window.location.href = './contact.html';">
                         <img class="mobile" src="asset\logo\menuLogo\contact.webp" alt="Contact">
                         <span class="desktop">Contact</span>
                     </button>
-                    <button class="rightSideButton">
+                    <button class="rightSideButton" onclick="window.location.href = './commission.html';">
                         <img class="mobile" src="asset\logo\menuLogo\commission.webp" alt="Commission">
                         <span class="desktop">Commission</span>
                     </button>
@@ -207,7 +219,7 @@
         // const topCollectionWidth = document.querySelector('#askarMTopCollection2010').offsetWidth;
         function addTotalImgSize(imgWidth,imgHeight){
             totalImgWidth += imgWidth;
-            setValue ('--imgScrollX',totalImgWidth*-1 + 'px');
+            setValue ('--imgScrollX',totalImgWidth*-1 + jumlahImageDepan*-4/100*window.innerHeight + 'px');
 
             totalImgHeight += imgHeight;
             setValue ('--imgScrollY',totalImgHeight*-1 + 'px');
