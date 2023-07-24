@@ -55,12 +55,13 @@ body{
     font-size: min(19px,3vw,5vh);
     background-color:#0000;
     height: min(11vh,11vw);
-    border-width: 20px 1px;
+    border-width: 1px 1px;
     border-color: #0000;    
 }
 .buttonSplitter button:hover{
     border-style: solid;
     border-color: #0000 #888;
+    border-image: linear-gradient(transparent, #777 ,transparent ) 10;
     
     color: #000;  
     cursor: pointer;

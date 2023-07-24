@@ -43,31 +43,29 @@
                 image-rendering: -o-crisp-edges; /* Opera */
                 image-rendering: pixelated; /*CSS4*/
                 -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
-                height: min(500px,100vh);
-                width: min(500px,100vw);
+                height: 500px;
+                width: 500px;
             }
             polyline{
                 transform: scale(var(--svgScale)); /* Set the desired scale factor */
             }
-            .blendLighten{
-                
-            }
             .center{
                 position: absolute;
-                top: 50%;
+                /* top: 50%;
                 left: 50%;
-                transform: translate(-50%, -50%) ;
-                max-height:100vh;
-                max-width: 100vw;
+                transform: translate(-50%, -50%) ; */
+                
+                top: 0%;
+                left: 0%;
             }
             .tombolSosmed{
                 position: absolute;
                 top: 0%;
                 left: 0%;
-                mix-blend-mode: difference;
+                /* mix-blend-mode: lighten; */
             }
             .unhoveredSosmed{
-                opacity: 0.5;
+                filter: brightness(50%);
             }
         </style>
     </head>
@@ -82,23 +80,7 @@
                     shape-rendering : "pixelated";' />
                 </svg>
             </div>
-            <div class="center sosmedContainer">
-                <img class="tombolSosmed up" src="asset/logo/contactButton/twitter.webp">
-                <img class="tombolSosmed left" src="asset/logo/contactButton/instagram.webp">
-                <img class="tombolSosmed right" src="asset/logo/contactButton/gmail.webp">
-                <img class="tombolSosmed down" src="asset/logo/contactButton/discord.webp">
-                <img src="asset/logo/contactButton/blank.webp"><!-- for sizing and positioning the div -->
-            </div>
-            
-            <!-- <a href="https://discord.com/channels/@me/1132115653449498664" target="_blank">Discord</a>
-            <a href="https://www.instagram.com/askarghany/" target="_blank">instagram</a>
-            <a href="https://twitter.com/karunochi" target="_blank">Twitter</a>
-            <a href="mailto:askarghany05@gmail.com">Email</a>
-            
-            <a href="https://www.pixiv.net/en/users/38281961" target="_blank">Pixiv</a>
-            <a href="https://www.youtube.com/@karunochii" target="_blank">Youtube</a>
-            <a href="https://twitter.com/karunochi" target="_blank">Twitter</a> -->
-                
+            <img src="C:\Users\Asus\Pictures\gmail.png" width="500" height="500">
             <div class="buttonContainer">
                 <div class="buttonSplitter">
                     <button class="logoButton">
@@ -157,13 +139,15 @@
 
         let lastPos = [-999,-999];
 
-        let imageToDraw = [[50,50]];
+        let imageToDraw = twitter;
         const fadeTime = 300;
         let indexToAdd = 0;
         function addDrawCoor(evt) {
-            indexToAdd += 25;
-            indexToAdd %= imageToDraw.length;
-            const coorToAdd = [imageToDraw[indexToAdd][0]*5, imageToDraw[indexToAdd][1]*5];
+            // indexToAdd += 25;
+            // indexToAdd %= imageToDraw.length;
+            // const coorToAdd = [imageToDraw[indexToAdd][0]*5, imageToDraw[indexToAdd][1]*5];
+            const coorToAdd = [evt.clientX, evt.clientY];
+            if(mouseStillDown)
             addLinePoint(coorToAdd);
         }
 
@@ -171,7 +155,7 @@
         function addLinePoint(newCoor){
             drawCoor.push(newCoor);
             updateLine();
-            setTimeout(eraseLinePoint,fadeTime);
+            // setTimeout(eraseLinePoint,fadeTime);
         }
 
         function eraseLinePoint(){
@@ -180,13 +164,38 @@
         }
 
         function updateLine(){
+            // if(true)
+            // return;
             let formattedPos = "";
             drawCoor.forEach((coor) => {
                 formattedPos += `${coor[0]},${coor[1]} `;
             });
             polyline.setAttribute("points",formattedPos)
+            svg.innerHTML = `
+            <polyline 
+                points="${formattedPos}" 
+                style='
+                    fill : none;
+                    stroke : var(--lineColor);
+                    stroke-width : 0.5;
+                    shape-rendering : "pixelated";
+                ' />
+            `;
         }
         setInterval(addDrawCoor, 1);
+
+        window.addEventListener('mousemove', addDrawCoor);
+        window.addEventListener('click', 
+                function(event) {
+            mouseStillDown = !mouseStillDown;
+                }
+            );
+        // window.addEventListener('mousedown', (evt)=>{
+        //     mouseStillDown = !mouseStillDown;
+        // });
+        // window.addEventListener('mouseup', (evt)=>{
+        //     mouseStillDown = false;
+        // });
 
         // ==========================
         const sosmed = document.querySelector('.sosmedContainer');
@@ -229,19 +238,15 @@
             switch(position) {
                 case up:
                     hoveredElement = document.querySelector('.sosmedContainer .up');
-                    imageToDraw = twitter;
                     break;
                 case left:
                     hoveredElement = document.querySelector('.sosmedContainer .left');
-                    imageToDraw = instagram;
                     break;
                 case right:
                     hoveredElement = document.querySelector('.sosmedContainer .right');
-                    imageToDraw = gmail;
                     break;
                 case down:
                     hoveredElement = document.querySelector('.sosmedContainer .down');
-                    imageToDraw = discord;
                     break;
             }
             hoveredElement.classList.remove("unhoveredSosmed");
@@ -251,10 +256,8 @@
         //     buttonHovered = true;
         //     lightUpHoveredElement();
         // });
-        sosmed.addEventListener('mouseout', () => {
-            hoveredElement.classList.add("unhoveredSosmed")
-            imageToDraw = [[50,50]]
-        });
+        sosmed.addEventListener('mouseout', () => 
+            hoveredElement.classList.add("unhoveredSosmed"));
         // sosmed.addEventListener('click', 
         //         function(event) {
         //         }
