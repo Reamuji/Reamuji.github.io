@@ -257,10 +257,11 @@
             hoveredElement.classList.add("unhoveredSosmed")
             imageToDraw = [[50,50]]
         });
-        // sosmed.addEventListener('click', 
-        //         function(event) {
-        //         }
-        //     );
+        sosmed.addEventListener('click', 
+                function(event) {
+                    window.open(linkOnclick);
+                }
+            );
         // ================================ Rotate Logo ================================
         const KRNC = document.querySelector('.KRNC')
         const logogram = document.querySelectorAll('.logogram')
