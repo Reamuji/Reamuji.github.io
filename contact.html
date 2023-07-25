@@ -49,9 +49,6 @@
             polyline{
                 transform: scale(var(--svgScale)); /* Set the desired scale factor */
             }
-            .blendLighten{
-                
-            }
             .center{
                 position: absolute;
                 top: 50%;
@@ -199,6 +196,7 @@
 
         // window.addEventListener('mousemove',
         let hoveredElement
+        let linkOnclick = "";
         // let buttonHovered = false;
         
         const sosmedRect = sosmed.getBoundingClientRect();
@@ -229,18 +227,22 @@
             switch(position) {
                 case up:
                     hoveredElement = document.querySelector('.sosmedContainer .up');
+                    linkOnclick = "https://twitter.com/karunochi"
                     imageToDraw = twitter;
                     break;
                 case left:
                     hoveredElement = document.querySelector('.sosmedContainer .left');
+                    linkOnclick = "https://www.instagram.com/askarghany"
                     imageToDraw = instagram;
                     break;
                 case right:
                     hoveredElement = document.querySelector('.sosmedContainer .right');
+                    linkOnclick = "mailto:askarghany05@gmail.com"
                     imageToDraw = gmail;
                     break;
                 case down:
                     hoveredElement = document.querySelector('.sosmedContainer .down');
+                    linkOnclick = "https://discord.com/channels/@me/1132115653449498664"
                     imageToDraw = discord;
                     break;
             }
