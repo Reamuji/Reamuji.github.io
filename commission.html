@@ -20,6 +20,7 @@
                 border: 0;
                 overflow-x: hidden;
                 /* width: 100vw; */
+                font-size: small;
             }
 
             .buttonContainer{
@@ -51,12 +52,13 @@
             width: 50vw;
             text-align: center;
             margin: auto;
-            font-size: 1.5em;
+            font-size: 1.5vw;
             margin-bottom: 10vw;
         }
         h1{
-            font-size: 5em;
+            font-size: 10vw;
             font-weight: bolder;
+            margin: 0 auto;
         }
         
         .answer,.question{
@@ -90,10 +92,22 @@
             opacity: 0.5;
             margin: auto;
         }
+        /* //mobile */
+        @media (max-width: 768px) { 
+            .main{
+                width: 80vw;
+                margin-bottom: min(35vh,35vw);
+                font-size: 3vw;
+            }
+            h1{
+                font-size: 15vw;
+                font-weight: bolder;
+            }
+        }
     </style>
     </head>
         <body>
-            <img class="sideImg" src="asset/image/commision/pricetag.webp">
+            <!-- <img class="sideImg" src="asset/image/commision/pricetag.webp"> -->
                 <div class="main">
                     <h1>commission</h1>
                     <hr>
