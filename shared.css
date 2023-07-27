@@ -23,7 +23,6 @@ body{
     padding: 0px 5px;
     position: fixed;
     bottom: 5%;
-    backdrop-filter: brightness(0.9) blur(2px);
     mix-blend-mode: lighten;
 }
 @media only screen and (max-width: 1200px) {
@@ -155,4 +154,8 @@ button img{
     .logoButton{
         order: -1;
     }
+}
+.visitorCounter{
+    position: absolute;
+    top: -100vh;
 }

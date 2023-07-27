@@ -7,7 +7,6 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" type="image/x-icon" href="asset\logo\karunochi\other\iconLow.webp" />
-        <link rel="stylesheet" href="shared.css">
         <style>
             :root{
             --bgColor:#000;
@@ -21,17 +20,11 @@
                 border: 0;
                 overflow: hidden;
                 width: 100vw;
-                width: 100vh;
+                height: 100vh;
             }
 
             .buttonContainer{
                 backdrop-filter: brightness(0.5);
-            }
-            #sosmed{
-                position: absolute;
-                top: 40px;
-                height: 420px;
-                width: 500px;
             }
             svg{
                 background-color: #0000;
@@ -43,8 +36,11 @@
                 image-rendering: -o-crisp-edges; /* Opera */
                 image-rendering: pixelated; /*CSS4*/
                 -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
-                height: min(500px,100vh);
-                width: min(500px,100vw);
+                height: 500px;
+                width: 500px;
+                
+                max-height:100vh;
+                max-width: 100vw;
             }
             polyline{
                 transform: scale(var(--svgScale)); /* Set the desired scale factor */
@@ -56,6 +52,7 @@
                 transform: translate(-50%, -50%) ;
                 max-height:100vh;
                 max-width: 100vw;
+                transform-origin: center center;
             }
             .tombolSosmed{
                 position: absolute;
@@ -66,7 +63,19 @@
             .unhoveredSosmed{
                 opacity: 0.5;
             }
+                    
+            @media (max-width: 768px) {
+                svg{
+                    display: none;
+                }
+            }
+            @media (max-height: 768px) {
+                svg{
+                    display: none;
+                }
+            }
         </style>
+        <link rel="stylesheet" href="shared.css">
     </head>
         <body>
             <div class="center">
@@ -128,6 +137,10 @@
                         <span class="desktop">Commission</span>
                     </button>
                 </div>
+            </div>
+            <div class="visitorCounter">
+                <a href='https://www.stat-counter.org/'>https://www.Stat-Counter.org</a> <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=9ba6b1cf807f7f8bcdef4e4c3efb72305000407c'></script>
+                <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1056544/t/3"></script>
             </div>
         </body>
     <script src="data coor.js"></script>
@@ -199,19 +212,29 @@
         let linkOnclick = "";
         // let buttonHovered = false;
         
-        const sosmedRect = sosmed.getBoundingClientRect();
-        const sosmedImgRect = sosmed.getBoundingClientRect();
-        const elementLeft = sosmedRect.left;
-        const elementTop = sosmedRect.top;
-        const elementWidth = sosmedImgRect.width;
-        const elementHeight = sosmedImgRect.height;
+        let sosmedRect = sosmed.getBoundingClientRect();
+        let sosmedImgRect = sosmed.getBoundingClientRect();
+        let elementLeft = sosmedRect.left;
+        let elementTop = sosmedRect.top;
+        let elementWidth = sosmedImgRect.width;
+        let elementHeight = sosmedImgRect.height;
+
+        window.addEventListener('resize', ()=>{
+            sosmedRect = sosmed.getBoundingClientRect();
+            sosmedImgRect = sosmed.getBoundingClientRect();
+            elementLeft = sosmedRect.left;
+            elementTop = sosmedRect.top;
+            elementWidth = sosmedImgRect.width;
+            elementHeight = sosmedImgRect.height;
+        })
+
         sosmed.addEventListener('mousemove', ()=>{
-            const clickX = event.clientX - elementLeft;
-            const clickY = event.clientY - elementTop;
+            let clickX = event.clientX - elementLeft;
+            let clickY = event.clientY - elementTop;
             // while(buttonHovered){
 
-            const onBottomRight  = clickY + clickX > (elementWidth + elementHeight)/2; 
-            const onBottomLeft = clickY > clickX; 
+            let onBottomRight  = clickY + clickX > (elementWidth + elementHeight)/2; 
+            let onBottomLeft = clickY > clickX; 
 
             const up = 0;
             const left = 1;
