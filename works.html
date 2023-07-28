@@ -36,6 +36,9 @@
             height: 100%;
         }
 
+        .buttonContainer{
+                backdrop-filter: brightness(0.75);
+            }
         
         /* ============================================== imgViewer ============================================== */
         .imgViewer{
@@ -218,6 +221,16 @@
             margin-left: 5px; 
         }
 
+        /* ============================== sosmed ============================ */
+        .sosmedContainer{
+            position:fixed;
+        }
+        .sosmedContainer img{
+            width: 6vw;
+            margin-top: 1vw;
+            margin-left: 1vw;
+            cursor: pointer;
+        }
         /* ============================================== DESKTOP ============================================== */
         @media (min-width: 768px) {
             /* ============================================== SIDE MENU ============================================== */
@@ -330,7 +343,7 @@
             }
 
             .illustration img{
-                transition: transform 0.2s ease-in-out , top 0.05s;
+                transition: transform 0.2s ease-in-out , top 0.01s;
                 transform-origin: center;
             }
             .illustration img:hover{
@@ -340,16 +353,23 @@
                 /* cursor: zoom-in; */
                 cursor: pointer;
             }
+            /* ============================== sosmed ============================ */
+            .sosmedContainer{
+                position:fixed;
+                /* mix-blend-mode:difference; */
+                /* background-color:#0003 ; */
+            }
+            .sosmedContainer img{
+                width: 3vw;
+                margin-top: 1vw;
+                margin-left: 1vw;
+                cursor: pointer;
+            }
         }
     </style>
 </head>
 <body id="illustration">
-    <div class="visitorCounter">
-        <a href='https://www.stat-counter.org/'>https://www.Stat-Counter.org</a>
-        <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=02b035ed6127be0718ff7f22040fef3984665f2f'></script>
-        <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1056543/t/0"></script>
-    </div>
-    <div class="hideOverflow">
+    <div class="desktop hideOverflow">
         <div class="svgContainer">
             <svg shape-rendering="crispEdges">
                 <polyline points=""
@@ -396,6 +416,11 @@
         </div>
         <div id="music" class="music">
             <div class="musicEnd"></div>
+        </div>
+        <div class="sosmedContainer">
+            <img src="asset/logo/works link/pixiv.webp" onclick="window.open('https://www.pixiv.net/en/users/38281961', '_blank');" alt="pixiv">
+            <img src="asset/logo/works link/twitter.webp" onclick="window.open('https://twitter.com/karunochi', '_blank');" alt="twitter">
+            <img src="asset/logo/works link/youtube.webp" onclick="window.open('https://www.youtube.com/@karunochii', '_blank');" alt="youtube">
         </div>
     </div>
 
@@ -598,7 +623,7 @@
         }
         
         let artwork = []
-        for(let i=1;i<=10;i++){
+        for(let i=1;i<=14;i++){
             const j = {
                 lowSrc: `asset/frontImage/SD/${i}.webp`,
                 HDSrc: `asset/frontImage/UHD/${i}.webp`,
@@ -991,5 +1016,11 @@
             mouseStillDown = false;
         });
     </script>
+    
+    <div class="visitorCounter">
+        <a href='https://www.stat-counter.org/'>https://www.Stat-Counter.org</a>
+        <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=02b035ed6127be0718ff7f22040fef3984665f2f'></script>
+        <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1056543/t/0"></script>
+    </div>
 </body>
 </html>
