@@ -482,7 +482,23 @@
             </button>
         </div> -->
     </div>
-
+    <div class="visitorCounter">
+        <a href='https://www.stat-counter.org/'>https://www.Stat-Counter.org</a>
+        <script type="text/javascript">
+            function loadAfterImages() {
+              // Put the code you want to execute after all images are loaded here
+              // For example:
+              var script1 = document.createElement("script");
+              script1.src = "https://www.freevisitorcounters.com/auth.php?id=02b035ed6127be0718ff7f22040fef3984665f2f";
+              document.body.appendChild(script1);
+          
+              var script2 = document.createElement("script");
+              script2.src = "https://www.freevisitorcounters.com/en/home/counter/1056543/t/0";
+              document.body.appendChild(script2);
+            }
+            window.onload = loadAfterImages;
+          </script>
+    </div>
 
     <script>
         //request client - turn off right click
@@ -614,7 +630,6 @@
         let randomY = 0;
         let randomX = 0;
         let randomZ = 0;
-        let scrollSpeed = 0;
         let normalImgWidth = 40;//%
 
         let musicSectOffset = 50 //vh
@@ -653,7 +668,8 @@
             randomX = random(0.3,0.7);
             usedX = (usedX + randomX) % 1
             randomZ = randomInt(50, 90);
-            scrollSpeed = (randomZ-50)/-25;   //  = 0to30 /-30 = 0to-1
+            const scrollSpeed = (randomZ-50)/-25;   //  = 0to30 /-30 = 0to-1
+            const curUsedY = usedY;
 
             let img = artworkTemplate.cloneNode();
 
@@ -672,6 +688,11 @@
             img.addEventListener('load',
             onLoad => { 
                 img.style.setProperty("--imageWidth", 45 * Math.sqrt(img.offsetWidth/img.offsetHeight) + "%");
+            });
+
+            window.addEventListener('scroll', ()=>{
+                img.style.top = curUsedY*window.innerWidth/100 - curUsedY*window.innerWidth/100*scrollSpeed + window.scrollY*scrollSpeed + "px";
+                console.log(curUsedY*window.innerWidth/100 - curUsedY*window.innerWidth/100*scrollSpeed + window.scrollY*scrollSpeed);
             });
 
             illustrationSect.appendChild(img);
@@ -1019,11 +1040,5 @@
             mouseStillDown = false;
         });
     </script>
-    
-    <div class="visitorCounter">
-        <a href='https://www.stat-counter.org/'>https://www.Stat-Counter.org</a>
-        <script defer type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=02b035ed6127be0718ff7f22040fef3984665f2f'></script>
-        <script defer type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1056543/t/0"></script>
-    </div>
 </body>
 </html>
