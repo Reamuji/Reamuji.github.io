@@ -314,6 +314,17 @@
             .illustration{
                 width: 100%;
             }
+            .illustration img{
+                transition: transform 0.2s ease-in-out;
+                transform-origin: center;
+            }
+            .illustration img:hover{
+                /* transform: scale(100%)!important; */
+                transform: scale(calc(1.15% * var(--randomZ)))!important;
+                z-index:-1!important;
+                /* cursor: zoom-in; */
+                cursor: pointer;
+            }
             /* ============================================== DRAWING ============================================== */
             .showOverflow{
                 width: 10%;
@@ -345,17 +356,6 @@
                 transform: scale(var(--svgScale)); /* Set the desired scale factor */
             }
 
-            .illustration img{
-                transition: transform 0.2s ease-in-out;
-                transform-origin: center;
-            }
-            .illustration img:hover{
-                /* transform: scale(100%)!important; */
-                transform: scale(calc(1.15% * var(--randomZ)))!important;
-                z-index:-1!important;
-                /* cursor: zoom-in; */
-                cursor: pointer;
-            }
             /* ============================== sosmed ============================ */
             .sosmedContainer{
                 position:fixed;
@@ -654,7 +654,7 @@
         artworkTemplate.style.top = usedY + "px" ;
         artworkTemplate.style.setProperty("--imageWidth", "40%"); //later set this to 1/aspect ratio = x/y * 40%
         artworkTemplate.style.width = "var(--imageWidth)";
-        artworkTemplate.style.transition = "top 0.1s cubic-bezier(0.000, 0.500, 1.000, 0.500);";
+        // artworkTemplate.style.transition = "top 0.5s cubic-bezier(0.000, 0.500, 1.000, 0.500);";
         artworkTemplate.setAttribute("loading", "lazy");
         // artworkTemplate.setAttribute("oncontextmenu", "return false;");
         
