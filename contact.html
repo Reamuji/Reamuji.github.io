@@ -66,7 +66,7 @@
         </style>
         <link rel="stylesheet" href="shared.css">
     </head>
-        <body>
+        <body><div class="main">
             <div class="center">
                 <svg shape-rendering="crispEdges">
                     <polyline points=""
@@ -83,7 +83,7 @@
                 <img class="tombolSosmed right" src="asset/logo/contactButton/gmail.webp">
                 <img class="tombolSosmed down" src="asset/logo/contactButton/discord.webp">
                 <img src="asset/logo/contactButton/blank.webp"><!-- for sizing and positioning the div -->
-            </div>
+            </div></div>
             
             <!-- <a href="https://discord.com/channels/@me/1132115653449498664" target="_blank">Discord</a>
             <a href="https://www.instagram.com/askarghany/" target="_blank">instagram</a>
@@ -109,11 +109,11 @@
                             </span>
                         </div>
                     </button>
-                    <button onclick="window.location.href = './index.html';">
+                    <button onclick="switchPage('./index.html');">
                         <img class="mobile" src="asset\logo\menuLogo\home.webp" alt="Home">
                         <span class="desktop">Home</span>
                     </button>
-                    <button onclick="window.location.href = './works.html';">
+                    <button onclick="switchPage('./works.html');">
                         <img class="mobile" src="asset\logo\menuLogo\works.webp" alt="Works">
                         <span class="desktop">Works</span>
                     </button>
@@ -121,13 +121,27 @@
                         <img class="mobile" src="asset\logo\menuLogo\contact.webp" alt="Contact">
                         <span class="desktop">Contact</span>
                     </button>
-                    <button class="rightSideButton" onclick="window.location.href = './commission.html';">
+                    <button class="rightSideButton" onclick="switchPage('./commission.html');">
                         <img class="mobile" src="asset\logo\menuLogo\commission.webp" alt="Commission">
                         <span class="desktop">Commission</span>
                     </button>
                 </div>
             </div>
         </body>
+        <script>
+            //transition
+            const contentTr = document.querySelector('.main');
+            contentTr.style.opacity = "0";
+            contentTr.style.transition = "opacity 0.5s";
+
+            function switchPage(newPage){
+                contentTr.style.opacity = "0";
+                setTimeout(()=>window.location.href = newPage,400)
+            }
+            window.addEventListener("pageshow",()=>{
+                contentTr.style.opacity = "1";
+            });
+        </script>
     <script src="data coor.js"></script>
     <script>
         let root = document.documentElement;

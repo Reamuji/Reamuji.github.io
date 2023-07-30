@@ -141,8 +141,9 @@
                     <div class="imgContainer"></div><div class="imgContainer"></div>
                 </div>
             </div> -->
-
-            <div class="stack">
+            
+            <div class="main">
+            <div class="stack main">
                 <div class="askarMTopCollection2010">
                     <div class="imgContainer"></div><div class="imgContainer"></div>
                 </div>
@@ -156,12 +157,13 @@
             </div>
             <div class="stack overlay">
             </div>
-
             <div class="stack">
                 <div id="logo">
                     <img src="asset\logo\karunochi\white\Logotype (BG).webp">
                 </div>
             </div>
+            </div>
+            
             <div class="buttonContainer">
                 <div class="buttonSplitter">
                     <button class="logoButton">
@@ -181,21 +183,35 @@
                         <img class="mobile" src="asset\logo\menuLogo\home.webp" alt="Home">
                         <span class="desktop">Home</span>
                     </button>
-                    <button onclick="window.location.href = './works.html';">
+                    <button onclick="switchPage('./works.html');">
                         <img class="mobile" src="asset\logo\menuLogo\works.webp" alt="Works">
                         <span class="desktop">Works</span>
                     </button>
-                    <button class="rightSideButton" onclick="window.location.href = './contact.html';">
+                    <button onclick="switchPage('./contact.html');" class="rightSideButton">
                         <img class="mobile" src="asset\logo\menuLogo\contact.webp" alt="Contact">
                         <span class="desktop">Contact</span>
                     </button>
-                    <button class="rightSideButton" onclick="window.location.href = './commission.html';">
+                    <button class="rightSideButton" onclick="switchPage('./commission.html');">
                         <img class="mobile" src="asset\logo\menuLogo\commission.webp" alt="Commission">
                         <span class="desktop">Commission</span>
                     </button>
                 </div>
             </div>
         </body>
+        <script>
+            //transition
+            const contentTr = document.querySelector('.main');
+            contentTr.style.opacity = "0";
+            contentTr.style.transition = "opacity 0.5s";
+
+            function switchPage(newPage){
+                contentTr.style.opacity = "0";
+                setTimeout(()=>window.location.href = newPage,400)
+            }
+            window.addEventListener("pageshow",()=>{
+                contentTr.style.opacity = "1";
+            });
+        </script>
     <script>
         let root = document.documentElement;
 		const setValue = (varName,value) => root.style.setProperty(varName, value);
@@ -206,12 +222,13 @@
         for(let i=1;i<=jumlahImageDepan;i++){
             let image = `asset/frontImage/SD/${i}.webp`
             img += `
-                <img src="${image}">`
+                <img src="${image}" loading="lazy">`
         }
 
         imgContainerList = Array.from(document.getElementsByClassName("imgContainer"));
         imgContainerList.forEach(
-            imgContainer => {imgContainer.innerHTML = img});
+            imgContainer => {imgContainer.innerHTML = img}
+        );
 
         let totalImgWidth = 0;
         let totalImgHeight = 0;

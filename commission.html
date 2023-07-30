@@ -31,11 +31,11 @@
             width: 10px;
         }
         ::-webkit-scrollbar-track {
-            background: #0000; 
+            background-color: #0000; 
             border-radius: 0px;
         }
         ::-webkit-scrollbar-thumb {
-            background: #fff7; 
+            background-color: #fff7; 
             border-radius: 100vw;
         }
         ::-webkit-scrollbar-thumb:hover {
@@ -136,7 +136,7 @@
                     <div>
                         <a href="https://karunochicommission.carrd.co/assets/images/gallery01/ba5450d2_original.jpg?v=5993735e" class="thumbnail">
                             <span>
-                                <img src="https://karunochicommission.carrd.co/assets/images/gallery01/ba5450d2_original.jpg?v=5993735e" alt="PRICELIST">
+                                <img src="https://karunochicommission.carrd.co/assets/images/gallery01/ba5450d2_original.jpg?v=5993735e" alt="PRICELIST" loading="lazy">
                             </span>
                         </a>
                     </div>
@@ -147,7 +147,7 @@
                     <div>
                         <a href="https://karunochicommission.carrd.co/assets/images/gallery02/4998c16c_original.jpg?v=5993735e" class="thumbnail">
                             <span class="frame">
-                                <img src="https://karunochicommission.carrd.co/assets/images/gallery02/4998c16c.jpg?v=5993735e" alt="Workflow">
+                                <img src="https://karunochicommission.carrd.co/assets/images/gallery02/4998c16c.jpg?v=5993735e" alt="Workflow" loading="lazy">
                             </span>
                         </a>
                     </div>
@@ -187,15 +187,15 @@
                             </span>
                         </div>
                     </button>
-                    <button onclick="window.location.href = './index.html';">
+                    <button onclick="switchPage('./index.html');">
                         <img class="mobile" src="asset\logo\menuLogo\home.webp" alt="Home">
                         <span class="desktop">Home</span>
                     </button>
-                    <button onclick="window.location.href = './works.html';">
+                    <button onclick="switchPage('./works.html');">
                         <img class="mobile" src="asset\logo\menuLogo\works.webp" alt="Works">
                         <span class="desktop">Works</span>
                     </button>
-                    <button onclick="window.location.href = './contact.html';"class="rightSideButton">
+                    <button onclick="switchPage('./contact.html');"class="rightSideButton">
                         <img class="mobile" src="asset\logo\menuLogo\contact.webp" alt="Contact">
                         <span class="desktop">Contact</span>
                     </button>
@@ -206,6 +206,20 @@
                 </div>
             </div>
         </body>
+        <script>
+            //transition
+            const contentTr = document.querySelector('.main');
+            contentTr.style.opacity = "0";
+            contentTr.style.transition = "opacity 0.5s";
+
+            function switchPage(newPage){
+                contentTr.style.opacity = "0";
+                setTimeout(()=>window.location.href = newPage,400)
+            }
+            window.addEventListener("pageshow",()=>{
+                contentTr.style.opacity = "1";
+            });
+        </script>
     <script>
         let root = document.documentElement;
 		const setValue = (varName,value) => root.style.setProperty(varName, value);

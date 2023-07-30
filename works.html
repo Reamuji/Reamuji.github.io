@@ -226,12 +226,14 @@
 
         /* ============================== sosmed ============================ */
         .sosmedContainer{
+            top: 0;
+            right: 0;
             position:fixed;
+            display: grid;
         }
         .sosmedContainer img{
-            width: 6vw;
-            margin-top: 1vw;
-            margin-left: 1vw;
+            width: 12vw;
+            margin: 1vw 1vw 0 0;
             cursor: pointer;
         }
         /* ============================================== DESKTOP ============================================== */
@@ -359,6 +361,7 @@
             /* ============================== sosmed ============================ */
             .sosmedContainer{
                 position:fixed;
+                display: flex;
                 /* mix-blend-mode:difference; */
                 /* background-color:#0003 ; */
             }
@@ -372,6 +375,8 @@
     </style>
 </head>
 <body id="illustration">
+    
+    <div class="main">
     <div class="desktop hideOverflow">
         <div class="svgContainer">
             <svg shape-rendering="crispEdges">
@@ -436,6 +441,8 @@
             <div class="rotated dot crossLeft"></div>
         </div>
     </div>
+</div>
+    
     <div class="buttonContainer">
         <div class="buttonSplitter">
             <button class="logoButton">
@@ -451,7 +458,7 @@
                     </span>
                 </div>
             </button>
-            <button onclick="window.location.href = './index.html';">
+            <button onclick="switchPage('./index.html');">
                 <img class="mobile" src="asset\logo\menuLogo\home.webp" alt="Home">
                 <span class="desktop">Home</span>
             </button>
@@ -459,11 +466,11 @@
                 <img class="mobile" src="asset\logo\menuLogo\works.webp" alt="Works">
                 <span class="desktop">Works</span>
             </button>
-            <button class="rightSideButton" onclick="window.location.href = './contact.html';">
+            <button class="rightSideButton" onclick="switchPage('./contact.html');">
                 <img class="mobile" src="asset\logo\menuLogo\contact.webp" alt="Contact">
                 <span class="desktop">Contact</span>
             </button>
-            <button class="rightSideButton" onclick="window.location.href = './commission.html';">
+            <button class="rightSideButton" onclick="switchPage('./commission.html');">
                 <img class="mobile" src="asset\logo\menuLogo\commission.webp" alt="Commission">
                 <span class="desktop">Commission</span>
             </button>
@@ -482,24 +489,20 @@
             </button>
         </div> -->
     </div>
-    <div class="visitorCounter">
-        <a href='https://www.stat-counter.org/'>https://www.Stat-Counter.org</a>
-        <script type="text/javascript">
-            function loadAfterImages() {
-              // Put the code you want to execute after all images are loaded here
-              // For example:
-              var script1 = document.createElement("script");
-              script1.src = "https://www.freevisitorcounters.com/auth.php?id=02b035ed6127be0718ff7f22040fef3984665f2f";
-              document.body.appendChild(script1);
-          
-              var script2 = document.createElement("script");
-              script2.src = "https://www.freevisitorcounters.com/en/home/counter/1056543/t/0";
-              document.body.appendChild(script2);
-            }
-            window.onload = loadAfterImages;
-          </script>
-    </div>
+    <script>
+        //transition
+        const contentTr = document.querySelector('.main');
+        contentTr.style.opacity = "0";
+        contentTr.style.transition = "opacity 0.5s";
 
+        function switchPage(newPage){
+            contentTr.style.opacity = "0";
+            setTimeout(()=>window.location.href = newPage,400)
+        }
+        window.addEventListener("pageshow",()=>{
+            contentTr.style.opacity = "1";
+        });
+    </script>
     <script>
         //request client - turn off right click
 
@@ -1040,5 +1043,23 @@
             mouseStillDown = false;
         });
     </script>
+    
+    <div class="visitorCounter">
+        <a href='https://www.stat-counter.org/'>https://www.Stat-Counter.org</a>
+        <script type="text/javascript">
+            function loadAfterImages() {
+              // Put the code you want to execute after all images are loaded here
+              // For example:
+              var script1 = document.createElement("script");
+              script1.src = "https://www.freevisitorcounters.com/auth.php?id=02b035ed6127be0718ff7f22040fef3984665f2f";
+              document.body.appendChild(script1);
+          
+              var script2 = document.createElement("script");
+              script2.src = "https://www.freevisitorcounters.com/en/home/counter/1056543/t/0";
+              document.body.appendChild(script2);
+            }
+            window.onload = loadAfterImages;
+          </script>
+    </div>
 </body>
 </html>
