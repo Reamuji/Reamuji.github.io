@@ -65,12 +65,15 @@ body{
     
     color: #000;  
     cursor: pointer;
-    background-color: #eee;
+    background-color: #0002;
 }
 #selectedButton{
     color: #000;
     font-weight: 1000 ;
     cursor: default;
+}
+#selectedButton:hover{
+    background-color: #0000;
 }
 /* ======================= animated logo ======================= */
 .logoButton{

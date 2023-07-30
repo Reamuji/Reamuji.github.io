@@ -203,16 +203,20 @@
         <script>
             //transition
             const contentTr = document.querySelector('.main');
+            let pageSwitched = false;
             contentTr.style.opacity = "0";
             contentTr.style.transition = "opacity 0.5s";
             setTimeout(()=>contentTr.style.opacity = "1",100);
 
             function switchPage(newPage){
+                pageSwitched = true;
                 contentTr.style.opacity = "0";
                 setTimeout(()=>window.location.href = newPage,400)
             }
             window.addEventListener("pageshow",()=>{
-                contentTr.style.opacity = "1";
+                if(!pageSwitched){
+                    contentTr.style.opacity = "1";
+                }
             });
         </script>
     <script>
