@@ -155,6 +155,26 @@ button img{
         order: -1;
     }
 }
+/* ============================================== SCROLLBAR ============================================== */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background-color: #0000; 
+    border-radius: 0px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #fff7; 
+    border-radius: 100vw;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #fffa; 
+}
+/* Adjust the main menu to match the width of the scrollbar */
+/* .buttonContainer{
+    margin-left: 10x; 
+} */
+
 .visitorCounter{
     position: absolute;
     top: -100vh;

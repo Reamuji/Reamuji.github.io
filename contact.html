@@ -25,6 +25,8 @@
 
             .buttonContainer{
                 backdrop-filter: brightness(0.5);
+                /* scrollbar adjustment  */
+                translate: -5px 0;
             }
             svg{
                 background-color: #0000;
@@ -133,6 +135,7 @@
             const contentTr = document.querySelector('.main');
             contentTr.style.opacity = "0";
             contentTr.style.transition = "opacity 0.5s";
+            setTimeout(()=>contentTr.style.opacity = "1",100);
 
             function switchPage(newPage){
                 contentTr.style.opacity = "0";

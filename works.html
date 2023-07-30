@@ -205,24 +205,6 @@
             transition: top 0.015s;
         }
         /* ============================================== SCROLLBAR ============================================== */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0000; 
-            border-radius: 0px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #fff7; 
-            border-radius: 100vw;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #fffa; 
-        }
-        /* Adjust the main menu to match the width of the scrollbar */
-        .buttonContainer{
-            margin-left: 5px; 
-        }
 
         /* ============================== sosmed ============================ */
         .sosmedContainer{
@@ -494,6 +476,7 @@
         const contentTr = document.querySelector('.main');
         contentTr.style.opacity = "0";
         contentTr.style.transition = "opacity 0.5s";
+            setTimeout(()=>contentTr.style.opacity = "1",100);
 
         function switchPage(newPage){
             contentTr.style.opacity = "0";
@@ -512,7 +495,7 @@
         const random    = (start,end) =>  (start + Math.random() * (end-start));
         const randomInt = (start,end) =>  Math.floor((start + Math.random() * (end-start)));
 
-        const openedOnMobile = window.matchMedia('(max-width: 767px)').matches;
+        let openedOnMobile = window.matchMedia('(max-width: 767px)').matches;
 
 
         // shared variable
@@ -664,7 +647,7 @@
         // artworkTemplate.setAttribute("oncontextmenu", "return false;");
         
         randomY = randomInt(1, 5);
-        if(window.innerWidth < 780){
+        if(openedOnMobile){
             //add space for rotatingCross
             randomY += 14
         }
@@ -697,10 +680,10 @@
                 img.style.setProperty("--imageWidth", 45 * Math.sqrt(img.offsetWidth/img.offsetHeight) + "%");
             });
 
-            window.addEventListener('scroll', ()=>{
-                img.style.top = curUsedY*window.innerWidth/100 - curUsedY*window.innerWidth/100*scrollSpeed + window.scrollY*scrollSpeed + "px";
-                console.log(curUsedY*window.innerWidth/100 - curUsedY*window.innerWidth/100*scrollSpeed + window.scrollY*scrollSpeed);
-            });
+            // window.addEventListener('scroll', ()=>{
+            //     img.style.top = curUsedY*window.innerWidth/100 - curUsedY*window.innerWidth/100*scrollSpeed + window.scrollY*scrollSpeed + "px";
+            //     console.log(curUsedY*window.innerWidth/100 - curUsedY*window.innerWidth/100*scrollSpeed + window.scrollY*scrollSpeed);
+            // });
 
             illustrationSect.appendChild(img);
 
