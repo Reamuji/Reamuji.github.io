@@ -148,6 +148,7 @@
         .rotated.crossRight{
             rotate: -90deg;
         }
+
         /* ===============================music =================== */
         .music{
             position: absolute;
@@ -204,6 +205,12 @@
         .illustration img{
             transition: top 0.015s;
         }
+		.nsfw{
+			filter: blur(15px);
+		}
+		.nsfw:hover{
+			filter: blur(0px);
+		}
         /* ============================================== SCROLLBAR ============================================== */
 
         /* ============================== sosmed ============================ */
@@ -344,6 +351,7 @@
             .sosmedContainer{
                 position:fixed;
                 display: flex;
+				right: auto;
                 /* mix-blend-mode:difference; */
                 /* background-color:#0003 ; */
             }
@@ -628,14 +636,29 @@
             bannerContainer.style.top = `calc(${usedY}vw + ${musicSectOffset * 2/3}vh)`;
         }
         
-        let artwork = []
-        for(let i=1;i<=14;i++){
+        let artwork = [];
+		//const gambarSFW = 26;
+	//	const gambarNSFW = 3;
+//		const totalGambar = gambarSFW+gambarNSFW;
+		const totalGambar = 29;
+		
+//		let i;
+        for(let i=1;i<=totalGambar;i++){
             const j = {
-                lowSrc: `asset/frontImage/SD/${i}.webp`,
-                HDSrc: `asset/frontImage/HD/${i}.webp`,
+                lowSrc	: `asset/frontImage/SD/${i}.webp`,
+                HDSrc	: `asset/frontImage/HD/${i}.webp`,
+				//isNSFW	: false,
             };
             artwork.push(j);
         }
+//        for(i=i;i<=totalGambar;i++){
+  //          const j = {
+    //            lowSrc	: `asset/frontImage/SD/berutal/${i}.webp`,
+      //          HDSrc	: `asset/frontImage/HD/${i}.webp`,
+		//		isNSFW	: true,
+    //        };
+  //          artwork.push(j);
+//        }
 
         artworkTemplate.src = `asset/frontImage/SD/1.webp`,
         artworkTemplate.style.position = "absolute";
@@ -643,6 +666,7 @@
         artworkTemplate.style.setProperty("--imageWidth", "40%"); //later set this to 1/aspect ratio = x/y * 40%
         artworkTemplate.style.width = "var(--imageWidth)";
         // artworkTemplate.style.transition = "top 0.5s cubic-bezier(0.000, 0.500, 1.000, 0.500);";
+        artworkTemplate.style.transition = "top 0.1s ease-in-out;";
         artworkTemplate.setAttribute("loading", "lazy");
         // artworkTemplate.setAttribute("oncontextmenu", "return false;");
         
@@ -671,6 +695,11 @@
 
             img.style.setProperty("--randomZ", randomZ);
             img.style.transform = `scale(calc(1% * var(--randomZ)))`;
+			
+			if(image.isNSFW){
+				img.classList.add("nsfw");
+				console.log("ada bokepc coy");
+			}
 
             img.addEventListener('click', 
                 onClick => openImageViewer(image.HDSrc)
