@@ -512,6 +512,8 @@
         const random    = (start,end) =>  (start + Math.random() * (end-start));
         const randomInt = (start,end) =>  Math.floor((start + Math.random() * (end-start)));
 
+        const openedOnMobile = window.matchMedia('(max-width: 767px)').matches;
+
 
         // shared variable
         let isOnImgViewer = false;
@@ -677,10 +679,12 @@
             let img = artworkTemplate.cloneNode();
 
             img.src = image.lowSrc;
-            // img.style.top = usedY + "vw" ;
-            img.style.top = `calc( ${usedY}vw + var(--scroll)*${scrollSpeed} - ${usedY}vw*${scrollSpeed})`;
-            img.style.left = `calc((100% - var(--imageWidth)) * ${usedX})` ;
             img.style.zIndex = randomZ-100;
+            img.style.left = `calc((100% - var(--imageWidth)) * ${usedX})` ;
+            img.style.top = `calc( ${usedY}vw + var(--scroll)*${scrollSpeed} - ${usedY}vw*${scrollSpeed})`;
+            if(openedOnMobile){
+                img.style.top = usedY + "vw" ;
+            }
 
             img.style.setProperty("--randomZ", randomZ);
             img.style.transform = `scale(calc(1% * var(--randomZ)))`;
