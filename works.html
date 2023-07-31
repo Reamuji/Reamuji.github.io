@@ -844,6 +844,7 @@
             
             ui.addEventListener('click', 
                 function(event) {
+                    console.log(event);
                     const elementRect = event.target.getBoundingClientRect();
                     const elementLeft = elementRect.left;
                     const elementWidth = elementRect.width;
@@ -853,9 +854,7 @@
                     const elementCenter = elementLeft + elementWidth / 2;
 
                     // Compare the click position with the element center
-                    if (clickX < elementCenter) {
-                        // Clicked on the left side of the element
-                        console.log('Clicked on the left side');
+                    if (clickX < elementCenter || event instanceof TouchEvent) {
                         // let mouseIsInside = ui.getAttribute("mouseIsInside");
                         if(song.paused){
                             try{ if(currentlyPlaying != song)
@@ -871,8 +870,6 @@
                             turnVolume(song,0,audioFadeOut)
                         }
                     } else {
-                        // Clicked on the right side of the element
-                        console.log('Clicked on the right side');
                         window.open(music.youtubeLink, '_blank');
                     }
                 }
