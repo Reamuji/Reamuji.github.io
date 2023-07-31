@@ -667,7 +667,7 @@
         artworkTemplate.style.width = "var(--imageWidth)";
         // artworkTemplate.style.transition = "top 0.5s cubic-bezier(0.000, 0.500, 1.000, 0.500);";
         artworkTemplate.style.transition = "top 0.1s ease-in-out;";
-        artworkTemplate.setAttribute("loading", "lazy");
+        // artworkTemplate.setAttribute("loading", "lazy");
         // artworkTemplate.setAttribute("oncontextmenu", "return false;");
         
         randomY = randomInt(1, 5);
@@ -717,6 +717,7 @@
             illustrationSect.appendChild(img);
 
             randomY = randomInt(18, 20);
+            if(openedOnMobile){randomY += 12}
             addUsedY(randomY);
         })
         
