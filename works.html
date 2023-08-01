@@ -854,7 +854,7 @@
                     const elementCenter = elementLeft + elementWidth / 2;
 
                     // Compare the click position with the element center
-                    if (clickX < elementCenter || currentlyPlaying != song && (event instanceof TouchEvent || event.pointerType === 'touch' || event.pointerType === 'pen') {
+                    if (clickX < elementCenter || currentlyPlaying != song && (event instanceof TouchEvent || event.pointerType === 'touch' || event.pointerType === 'pen')) {
                         // let mouseIsInside = ui.getAttribute("mouseIsInside");
                         if(song.paused){
                             try{ if(currentlyPlaying != song)
