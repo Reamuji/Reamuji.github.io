@@ -110,6 +110,34 @@
             .sideImg{
                 display: none;
             }
+        }/* ============================================== imgViewer ============================================== */
+        .imgViewer{
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+        }
+        .imageWindow{
+            position: absolute;
+            width: 90vw;
+            height: 90vh;
+            object-fit: contain;
+            object-position: center;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+        .bgBlur{
+            position: absolute;
+            background-color:rgba(0,0,0,35%);
+            height: 100%;
+            width: 100%;
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px); /* safari */
+        }
+        .hide{
+            display: none;
         }
     </style>
     </head>
@@ -124,11 +152,12 @@
                             (Click to Zoom)
                     </span></p>
                     <div>
-                        <a href="https://karunochicommission.carrd.co/assets/images/gallery01/ba5450d2_original.jpg?v=5993735e" class="thumbnail">
+                        <!--a href="https://karunochicommission.carrd.co/assets/images/gallery01/ba5450d2_original.jpg?v=5993735e" class="thumbnail">
                             <span>
                                 <img src="https://karunochicommission.carrd.co/assets/images/gallery01/ba5450d2_original.jpg?v=5993735e" alt="PRICELIST" loading="lazy">
                             </span>
-                        </a>
+		    </a-->
+			<img src="https://karunochicommission.carrd.co/assets/images/gallery01/ba5450d2.jpg?v=5993735e" alt="PRICELIST" loading="lazy" onclick="openImageViewer('https://karunochicommission.carrd.co/assets/images/gallery01/ba5450d2_original.jpg?v=5993735e')">    
                     </div>
                     <p >Workflow<br>
                         <span class="sub">
@@ -140,6 +169,8 @@
                                 <img src="https://karunochicommission.carrd.co/assets/images/gallery02/4998c16c.jpg?v=5993735e" alt="Workflow" loading="lazy">
                             </span>
                         </a>
+			    
+			<img src="https://karunochicommission.carrd.co/assets/images/gallery02/4998c16c.jpg?v=5993735e" alt="PRICELIST" loading="lazy" onclick="openImageViewer('https://karunochicommission.carrd.co/assets/images/gallery01/4998c16c_original.jpg?v=5993735e')">
                     </div>
                     <p><span>
                         <strong>What will you get?</strong><br>
@@ -195,6 +226,10 @@
                     </button>
                 </div>
             </div>
+	<div class="imgViewer hide">
+        	<div class="bgBlur"></div>
+        	<img class="imageWindow">
+        </div>
         </body>
         <script>
             //transition
@@ -236,7 +271,40 @@
                 img.style.transform = "rotate(-90deg)";
             })
         });
+	     // shared variable
+        let isOnImgViewer = false;
+        // ================================ image full display ================================
+                //onClick => openImageViewer(image.HDSrc)
+        let imageViewer = document.querySelector('.imgViewer');
+        let imageWindow = document.querySelector('.imageWindow');
+
         
+        imageViewer.addEventListener('click', 
+            onClick => closeImageViewer()
+        );
+
+        function openImageViewer(imgSrc){
+            imageViewer.classList.remove('hide');
+            imageWindow.src = "";
+            imageWindow.src = imgSrc;
+            disableScroll();
+        }
+        function closeImageViewer(){
+            imageViewer.classList.add('hide');
+            enableScroll();
+        }
+        function disableScroll() {
+            scrollTop = window.pageYOffset;
+            scrollLeft = window.pageXOffset;
+
+            window.onscroll = function() {
+                window.scrollTo(scrollLeft, scrollTop);
+            };
+        }
+
+        function enableScroll() {
+            window.onscroll = function() {};
+        }
     </script>
     <div class="visitorCounter">
         <a href='https://www.stat-counter.org/'>https://www.Stat-Counter.org</a> <script defer type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=aa3b1e51e44619bb73688c5c710fbcd21032d75f'></script>
