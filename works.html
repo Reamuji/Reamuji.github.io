@@ -708,6 +708,7 @@
             img.addEventListener('load',
             onLoad => { 
                 img.style.setProperty("--imageWidth", 45 * Math.sqrt(img.offsetWidth/img.offsetHeight) + "%");
+		document.querySelector('.svgContainer').style.height = `${Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight)}px`;
             });
 
             // window.addEventListener('scroll', ()=>{
