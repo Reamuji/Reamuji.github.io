@@ -1060,6 +1060,9 @@
         window.addEventListener('mouseup', (evt)=>{
             mouseStillDown = false;
         });
+
+	    //SVG size
+document.querySelector('.svgContainer').style.height = `${Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight)}px`;
     </script>
     
     <div class="visitorCounter">
