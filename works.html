@@ -631,7 +631,6 @@
         let normalImgWidth = 40;//%
 
         let musicSectOffset = 50 //vh
-
         const addUsedY = amount=>{
             usedY += amount;
             musicSect.style.top = `calc(${usedY}vw + ${musicSectOffset}vh)`;
@@ -840,6 +839,7 @@
                 ui.style.height = img.offsetHeight + "px";
                 // img.style.width = img.offsetWidth-4 + "px";
                 // img.style.height = img.offsetHeight-1 + "px";
+		document.querySelector('.svgContainer').style.height = `${Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight)}px`;
             });
 
             let turn = 0;
