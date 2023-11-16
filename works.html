@@ -631,7 +631,6 @@
         let normalImgWidth = 40;//%
 
         let musicSectOffset = 50 //vh
-
         const addUsedY = amount=>{
             usedY += amount;
             musicSect.style.top = `calc(${usedY}vw + ${musicSectOffset}vh)`;
@@ -710,7 +709,6 @@
             img.addEventListener('load',
             onLoad => { 
                 img.style.setProperty("--imageWidth", 45 * Math.sqrt(img.offsetWidth/img.offsetHeight) + "%");
-				
             });
 
             // window.addEventListener('scroll', ()=>{
