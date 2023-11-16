@@ -636,6 +636,7 @@
             usedY += amount;
             musicSect.style.top = `calc(${usedY}vw + ${musicSectOffset}vh)`;
             bannerContainer.style.top = `calc(${usedY}vw + ${musicSectOffset * 2/3}vh)`;
+			document.querySelector('.svgContainer').style.height = `calc(${usedY}vw + ${musicSectOffset + 100}vh)`;
         }
         
         let artwork = [];
@@ -709,6 +710,7 @@
             img.addEventListener('load',
             onLoad => { 
                 img.style.setProperty("--imageWidth", 45 * Math.sqrt(img.offsetWidth/img.offsetHeight) + "%");
+				
             });
 
             // window.addEventListener('scroll', ()=>{
