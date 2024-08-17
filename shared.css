@@ -152,7 +152,7 @@ button img{
         display: initial;
     }
     .buttonSplitter button {
-        height: 11vh;
+        height: 10vh;
     }
     .logoButton{
         order: -1;
